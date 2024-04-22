@@ -8,8 +8,6 @@ namespace EduBook.BusinessObject.Models
         public Department()
         {
             Accounts = new HashSet<Account>();
-            Drinks = new HashSet<Drink>();
-            Foods = new HashSet<Food>();
             Rooms = new HashSet<Room>();
         }
 
@@ -22,8 +20,6 @@ namespace EduBook.BusinessObject.Models
         public bool Status { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }
-        public virtual ICollection<Drink> Drinks { get; set; }
-        public virtual ICollection<Food> Foods { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }
