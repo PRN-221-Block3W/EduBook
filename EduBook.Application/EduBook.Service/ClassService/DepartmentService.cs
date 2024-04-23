@@ -7,7 +7,7 @@ using EduBook.BusinessObject;
 using EduBook.Service.IService;
 using EduBook.Repository.IRepository;
 
-namespace EduBook.Service.ClassRepository
+namespace EduBook.Service.ClassService
 {
 	public class DepartmentService : IDepartmentService
 	{
