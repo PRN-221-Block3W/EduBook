@@ -29,6 +29,11 @@ namespace EduBook.DAO
 			_context = new EduBookContext();
         }
 
+		public List<Role> GetRoles()
+		{
+			return _context.Roles.ToList();
+		}
+
 		public Account Login(string email, string password)
 		{
 			return _context.Accounts

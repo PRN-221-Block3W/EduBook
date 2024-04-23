@@ -12,7 +12,9 @@ namespace EduBook.Repository.ClassRepository
     public class AccountRepository : IAccountRepository
     {
 		public Account Login(string email, string password) => AccountDAO.Instance.Login(email, password);
-		public bool Create(Account acc) => AccountDAO.Instance.Create(acc);
+        public List<Role> GetRoles() => AccountDAO.Instance.GetRoles();
+
+        public bool Create(Account acc) => AccountDAO.Instance.Create(acc);
 		public Account GetById(int id) => AccountDAO.Instance.GetById(id);
 		public List<Account> GetList() => AccountDAO.Instance.GetList();
 		public bool Remove(Account acc) => AccountDAO.Instance.Remove(acc);

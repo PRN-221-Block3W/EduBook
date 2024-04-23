@@ -10,6 +10,7 @@ namespace EduBook.Repository.IRepository
     public interface IAccountRepository
     {
         public Account Login(string email, string password);
+        public List<Role> GetRoles();
         public bool Create(Account acc);
         public List<Account> GetList();
         public Account GetById(int id);
