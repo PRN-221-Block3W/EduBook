@@ -43,6 +43,15 @@ namespace EduBook.Presentation
 
 			services.AddScoped<IRoomEquipmentRepository, RoomEquipmentRepository>();
 			services.AddScoped<IRoomEquipmentService, RoomEquipmentService>();
-		}
+
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
+
+            services.AddScoped<IManufactureRepository, ManufactureRepository>();
+            services.AddScoped<IManufactureService, ManufactureService>();
+        }
     }
 }
