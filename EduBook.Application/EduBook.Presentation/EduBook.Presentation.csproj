@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Authencation\**" />
+    <Content Remove="Pages\Authencation\**" />
+    <EmbeddedResource Remove="Pages\Authencation\**" />
+    <None Remove="Pages\Authencation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.29" />
@@ -19,10 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EduBook.Service\EduBook.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Authencation\" />
   </ItemGroup>
 
 </Project>

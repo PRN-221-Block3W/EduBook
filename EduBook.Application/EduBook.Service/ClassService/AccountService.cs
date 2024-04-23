@@ -18,7 +18,9 @@ namespace EduBook.Service.ClassService
 			_repo = repo;
 		}
 		public Account Login(string email, string password) => _repo.Login(email, password);
-		public bool Create(Account acc) => _repo.Create(acc);
+        public List<Role> GetRoles() => _repo.GetRoles();
+
+        public bool Create(Account acc) => _repo.Create(acc);
 
 		public Account GetById(int id) => _repo.GetById(id);
 
