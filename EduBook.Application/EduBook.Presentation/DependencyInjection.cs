@@ -1,7 +1,7 @@
 ﻿using EduBook.BusinessObject;
 using EduBook.Repository.ClassRepository;
 using EduBook.Repository.IRepository;
-using EduBook.Service.ClassRepository;
+using EduBook.Service.ClassService;
 using EduBook.Service.IService;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -52,6 +52,9 @@ namespace EduBook.Presentation
 
             services.AddScoped<IManufactureRepository, ManufactureRepository>();
             services.AddScoped<IManufactureService, ManufactureService>();
+
+            services.AddScoped<IBookingDetailsRepository, BookingDetailsRepository>();
+            services.AddScoped<IBookingDetailsService, BookingDetailsService>();
         }
     }
 }
