@@ -43,7 +43,7 @@ namespace EduBook.BusinessObject
 				.SetBasePath(Directory.GetCurrentDirectory())
 				.AddJsonFile("appsettings.json", true, true)
 				.Build();
-			var strConn = config["ConnectionStrings:DefaultConnectionStringDB"];
+			var strConn = config["ConnectionStrings:DefaultConnectionString"];
 			return strConn;
 		}
 
