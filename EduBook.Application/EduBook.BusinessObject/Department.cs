@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EduBook.BusinessObject.Models
+namespace EduBook.BusinessObject
 {
     public partial class Department
     {
@@ -14,8 +14,8 @@ namespace EduBook.BusinessObject.Models
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; } = null!;
         public string Address { get; set; } = null!;
-        public string StartTime { get; set; } = null!;
-        public string EndTime { get; set; } = null!;
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         public string ImageDepartment { get; set; } = null!;
         public bool Status { get; set; }
 

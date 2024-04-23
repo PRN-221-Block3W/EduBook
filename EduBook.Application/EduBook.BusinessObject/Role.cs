@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EduBook.BusinessObject.Models
+namespace EduBook.BusinessObject
 {
     public partial class Role
     {

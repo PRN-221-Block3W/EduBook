@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using EduBook.BusinessObject;
+using EduBook.Repository.ClassRepository;
+using EduBook.Repository.IRepository;
+using EduBook.Service.ClassRepository;
+using EduBook.Service.IService;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EduBook.Presentation
@@ -24,9 +29,20 @@ namespace EduBook.Presentation
         /// <param name="services"></param>
         public static void AddMasterServices(this IServiceCollection services)
         {
-            //Example code:
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IUserRepository, UserRepository>();
-        }
+			services.AddScoped<IAccountRepository, AccountRepository>();
+			services.AddScoped<IAccountService, AccountService>();
+
+			services.AddScoped<IBookingRepository, BookingRepository>();
+			services.AddScoped<IBookingService, BookingService>();
+
+			services.AddScoped<ICommentRepository, CommentRepository>();
+			services.AddScoped<ICommentService, CommentService>();
+
+			services.AddScoped<IRoomRepository, RoomRepository>();
+			services.AddScoped<IRoomService, RoomService>();
+
+			services.AddScoped<IRoomEquipmentRepository, RoomEquipmentRepository>();
+			services.AddScoped<IRoomEquipmentService, RoomEquipmentService>();
+		}
     }
 }
