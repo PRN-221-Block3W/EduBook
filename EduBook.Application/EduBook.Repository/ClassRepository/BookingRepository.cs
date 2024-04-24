@@ -12,7 +12,7 @@ namespace EduBook.Repository.ClassRepository
     public class BookingRepository : IBookingRepository
     {
 		public bool Create(Booking booking) => BookingDAO.Instance.Create(booking);
-
+		public List<Booking> GetBookingsByAccount(int accountID) => BookingDAO.Instance.GetBookingsByAccount(accountID);
 		public Booking GetById(int id) => BookingDAO.Instance.GetById(id);
 
 		public List<Booking> GetList() => BookingDAO.Instance.GetList();
