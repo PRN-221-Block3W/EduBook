@@ -3,7 +3,6 @@
     "EduBook.Presentation": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "HomePage",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
