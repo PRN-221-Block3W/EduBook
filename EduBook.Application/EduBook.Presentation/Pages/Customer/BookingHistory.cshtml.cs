@@ -27,6 +27,10 @@ namespace EduBook.Presentation.Pages.Customer
         public IActionResult OnGetAsync()
         {
             int? accountId = HttpContext.Session.GetInt32("AccountId");
+            if (accountId == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
             customer = accountRepository.GetById((int)accountId);
             Booking = bookingRepository.GetBookingsByAccount((int) accountId);
             return Page();
