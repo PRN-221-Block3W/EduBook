@@ -40,9 +40,10 @@ namespace EduBook.DAO
 		}
 		public List<Room> GetList()
 		{
-			return _context.Rooms
+			var list =_context.Rooms
 				//.Where(x => x.Status == true)
 				.ToList();
+			return list;
 		}
 
 		public Room GetById(int id)
