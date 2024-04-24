@@ -6,28 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class IndexModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IAccountService _accountService;
 
-        public IndexModel()
+        public IndexModel(IAccountService accountService)
         {
-            _context = new EduBookContext();
+            _accountService = accountService;
         }
 
         public IList<Account> Account { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet()
         {
-            if (_context.Accounts != null)
+            var role = HttpContext.Session.GetInt32("role");
+            if (role != 1)
             {
-                Account = await _context.Accounts
-                .Include(a => a.Department)
-                .Include(a => a.Role).ToListAsync();
+                return Redirect("/Customer/CustomerHomePage");
             }
+
+            Account = _accountService.GetList();
+            if(Account == null)
+            {
+                ViewData["Message"] = "The list is empty!";
+            }
+            return Page();
         }
     }
 }

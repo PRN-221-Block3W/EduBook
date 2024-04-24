@@ -31,6 +31,7 @@ namespace EduBook.Presentation.Pages.LoginPage
 			if (account != null)
 			{
 				HttpContext.Session.SetString("Email", Email);
+				HttpContext.Session.SetInt32("role", account.RoleId);
 				HttpContext.Session.SetInt32("AccountId", account.AccountId);
 			}
 			var role = accountService.GetRoles().FirstOrDefault(p => p.RoleId == account.RoleId);

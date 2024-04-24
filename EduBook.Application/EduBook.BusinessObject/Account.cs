@@ -14,7 +14,7 @@ namespace EduBook.BusinessObject
         public int AccountId { get; set; }
         public int RoleId { get; set; }
         public string? UserName { get; set; }
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
         public DateTime? Dob { get; set; }

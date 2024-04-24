@@ -6,29 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class DeleteModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IAccountService _accountService;
 
-        public DeleteModel(EduBook.BusinessObject.EduBookContext context)
+        public DeleteModel(IAccountService accountService)
         {
-            _context = context;
+            _accountService = accountService;
         }
 
         [BindProperty]
       public Account Account { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || _context.Accounts == null)
+            var role = HttpContext.Session.GetInt32("role");
+            if (role != 1)
+            {
+                return Redirect("/Customer/CustomerHomePage");
+            }
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var account = await _context.Accounts.FirstOrDefaultAsync(m => m.AccountId == id);
+            var account = _accountService.GetById((int)id);
 
             if (account == null)
             {
@@ -41,19 +47,18 @@ namespace EduBook.Presentation.Pages.Admin.Customer
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int? id)
         {
-            if (id == null || _context.Accounts == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var account = await _context.Accounts.FindAsync(id);
+            var account = _accountService.GetById((int)id);
 
             if (account != null)
             {
                 Account = account;
-                _context.Accounts.Remove(Account);
-                await _context.SaveChangesAsync();
+                _accountService.Remove(Account);
             }
 
             return RedirectToPage("./Index");

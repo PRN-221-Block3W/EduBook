@@ -6,22 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class CreateModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IAccountService _accountService;
+        private readonly IDepartmentService _departmentService;
+        private readonly ISlotService _slotService;
 
-        public CreateModel(EduBook.BusinessObject.EduBookContext context)
+        public CreateModel(IAccountService accountService)
         {
-            _context = context;
+            _accountService = accountService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
-        ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+            var role = HttpContext.Session.GetInt32("role");
+            if(role != 1)
+            {
+                return Redirect("/Customer/CustomerHomePage");
+            } 
+
+        ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "DepartmentId", "Address");
+        ViewData["RoleId"] = new SelectList(_slotService.GetList(), "RoleId", "RoleName");
             return Page();
         }
 
@@ -32,13 +41,12 @@ namespace EduBook.Presentation.Pages.Admin.Customer
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Accounts == null || Account == null)
+          if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Accounts.Add(Account);
-            await _context.SaveChangesAsync();
+            _accountService.Create(Account);
 
             return RedirectToPage("./Index");
         }
