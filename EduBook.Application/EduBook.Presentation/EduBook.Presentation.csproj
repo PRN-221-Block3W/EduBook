@@ -69,6 +69,7 @@
     <None Include="wwwroot\css\login\vendor\perfect-scrollbar\perfect-scrollbar.min.js" />
     <None Include="wwwroot\css\login\vendor\select2\select2.js" />
     <None Include="wwwroot\css\login\vendor\select2\select2.min.js" />
+    <None Include="wwwroot\lib\lightbox\js\lightbox.min.js" />
   </ItemGroup>
 
   <ItemGroup>
