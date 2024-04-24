@@ -22,6 +22,8 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
 
+app.UseSession();
+
 app.MapRazorPages();
 
 app.Run();
