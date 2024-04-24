@@ -1,0 +1,149 @@
+﻿@page
+@model EduBook.Presentation.Pages.Admin.Rooms.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+aside {
+    background-color: #212529;
+    color: #fff;
+    width: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo h2 {
+    margin: 0;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.sidebar a:hover {
+    color: #17a2b8;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+h1, h4 {
+    color: #343a40;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+/* Right Sidebar Styles */
+.right {
+    background-color: #f8f9fa;
+    width: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.theme-toggler {
+    margin-top: 20px;
+}
+
+/* Profile Styles */
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-photo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+</style>
+
+<h1>Create</h1>
+
+<h4>Room</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Room.RoomId" class="form-label">Room ID</label>
+                <input asp-for="Room.RoomId" class="form-control" />
+                <span asp-validation-for="Room.RoomId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Room.RoomName" class="form-label">Room Name</label>
+                <input asp-for="Room.RoomName" class="form-control" />
+                <span asp-validation-for="Room.RoomName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Room.Description" class="form-label">Description</label>
+                <input asp-for="Room.Description" class="form-control" />
+                <span asp-validation-for="Room.Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Room.LengthRoom" class="form-label">Length</label>
+                <input asp-for="Room.LengthRoom" class="form-control" />
+                <span asp-validation-for="Room.LengthRoom" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Room.WidthRoom" class="form-label">Width</label>
+                <input asp-for="Room.WidthRoom" class="form-control" />
+                <span asp-validation-for="Room.WidthRoom" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" asp-for="Room.Status" />
+                <label class="form-check-label" for="Room_Status">@Html.DisplayNameFor(model => model.Room.Status)</label>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
