@@ -26,5 +26,6 @@ namespace EduBook.Service.ClassService
 		public bool Remove(Booking booking) => _repo.Remove(booking);
 
 		public bool Update(Booking booking) => _repo.Update(booking);
+		public List<Booking> GetBookingsByAccount(int accountID) => _repo.GetBookingsByAccount(accountID);
 	}
 }

@@ -9,7 +9,9 @@ namespace EduBook.Repository.IRepository
 {
     public interface IBookingRepository
     {
-        public bool Create(Booking booking);
+        public List<Booking> GetBookingsByAccount(int accountID);
+
+		public bool Create(Booking booking);
         public List<Booking> GetList();
         public Booking GetById(int id);
         public bool Update(Booking booking);

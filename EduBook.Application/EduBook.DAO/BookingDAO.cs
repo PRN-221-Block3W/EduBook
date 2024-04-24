@@ -76,5 +76,25 @@ namespace EduBook.DAO
 			_context.Bookings.Update(booking);
 			return _context.SaveChanges() > 0;
 		}
+
+		public List<Booking> GetBookingsByAccount(int accountID)
+		{
+			var bookings = _context.Bookings
+				.Where(x => x.Status == true)
+				.Include(x => x.BookingDetails)
+				.ToList();
+			List<Booking> result = new List<Booking>();
+			foreach (var booking in bookings)
+			{
+				foreach(var bookingDetails in booking.BookingDetails)
+				{
+					if(bookingDetails.AccountId == accountID)
+					{
+						result.Add(booking);
+					}
+				}
+			}
+			return result;
+		}
 	}
 }
