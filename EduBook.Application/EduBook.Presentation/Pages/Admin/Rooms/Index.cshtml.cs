@@ -13,9 +13,9 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
     {
         private readonly EduBook.BusinessObject.EduBookContext _context;
 
-        public IndexModel(EduBook.BusinessObject.EduBookContext context)
+        public IndexModel()
         {
-            _context = context;
+            _context = new EduBookContext();
         }
 
         public IList<Room> Room { get;set; } = default!;
