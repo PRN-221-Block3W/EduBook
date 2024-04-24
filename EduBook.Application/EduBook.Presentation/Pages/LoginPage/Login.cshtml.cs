@@ -40,7 +40,7 @@ namespace EduBook.Presentation.Pages.LoginPage
 			}
 			if (role.RoleName.ToLower().Equals("staff"))
 			{
-				return Redirect("/Staff/StaffHome");
+				return Redirect("/Admin/AdminHome");
 			}
 			return Page();
 		}
