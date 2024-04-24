@@ -25,7 +25,6 @@ namespace EduBook.Presentation.Pages.Accounts
             if (_context.Accounts != null)
             {
                 Account = await _context.Accounts
-                .Include(a => a.Department)
                 .Include(a => a.Role).ToListAsync();
             }
         }

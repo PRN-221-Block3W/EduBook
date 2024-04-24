@@ -39,9 +39,9 @@ namespace EduBook.Presentation.Pages.LoginPage
 			{
 				return Redirect("/Customer/CustomerHomePage");
 			}
-			if (role.RoleName.ToLower().Equals("staff"))
+			if (role.RoleName.ToLower().Equals("admin"))
 			{
-				return Redirect("/Admin/AdminHome");
+				return Redirect("/Admin/Dashboard");
 			}
 			return Page();
 		}
