@@ -31,7 +31,7 @@ namespace EduBook.Presentation.Pages.Customer
 		public async Task<IActionResult> OnGetAsync()
 		{
 			int? accountId = HttpContext.Session.GetInt32("AccountId");
-			customer = accountService.GetById(accountId);
+			customer = accountService.GetById((int)accountId);
 			if (!string.IsNullOrEmpty(RoomName))
 			{
 				return RedirectToPage("/Customer/SearchShop", new { roomName = RoomName });
