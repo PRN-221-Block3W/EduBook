@@ -13,9 +13,9 @@ namespace EduBook.Presentation.Pages.Admin.Departments
     {
         private readonly EduBook.BusinessObject.EduBookContext _context;
 
-        public IndexModel(EduBook.BusinessObject.EduBookContext context)
+        public IndexModel()
         {
-            _context = context;
+            _context = new EduBookContext();
         }
 
         public IList<Department> Department { get;set; } = default!;
