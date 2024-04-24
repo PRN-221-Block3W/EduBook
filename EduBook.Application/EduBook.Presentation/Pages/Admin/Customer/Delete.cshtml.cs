@@ -12,11 +12,11 @@ namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class DeleteModel : PageModel
     {
-        private readonly IAccountService _accountService;
+        private readonly IAccountService _accService;
 
-        public DeleteModel(IAccountService accountService)
+        public DeleteModel(IAccountService accService)
         {
-            _accountService = accountService;
+            _accService = accService;
         }
 
         [BindProperty]
@@ -24,17 +24,13 @@ namespace EduBook.Presentation.Pages.Admin.Customer
 
         public IActionResult OnGet(int? id)
         {
-            var role = HttpContext.Session.GetInt32("role");
-            if (role != 1)
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
             {
-                return Redirect("/Customer/CustomerHomePage");
-            }
-            if (id == null)
-            {
-                return NotFound();
+                return authorizationResult;
             }
 
-            var account = _accountService.GetById((int)id);
+            var account = _accService.GetById((int)id);
 
             if (account == null)
             {
@@ -53,15 +49,31 @@ namespace EduBook.Presentation.Pages.Admin.Customer
             {
                 return NotFound();
             }
-            var account = _accountService.GetById((int)id);
+            var account = _accService.GetById((int)id);
 
             if (account != null)
             {
                 Account = account;
-                _accountService.Remove(Account);
+                _accService.Remove(Account);
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }

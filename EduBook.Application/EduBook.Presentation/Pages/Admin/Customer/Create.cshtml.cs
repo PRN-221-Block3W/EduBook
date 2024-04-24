@@ -12,43 +12,57 @@ namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class CreateModel : PageModel
     {
-        private readonly IAccountService _accountService;
+        private readonly IAccountService _accService;
         private readonly IDepartmentService _departmentService;
         private readonly ISlotService _slotService;
-
-        public CreateModel(IAccountService accountService)
+        public CreateModel(IAccountService accService)
         {
-            _accountService = accountService;
+            _accService = accService;
         }
 
         public IActionResult OnGet()
         {
-            var role = HttpContext.Session.GetInt32("role");
-            if(role != 1)
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
             {
-                return Redirect("/Customer/CustomerHomePage");
-            } 
+                return authorizationResult;
+            }
 
-        ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "DepartmentId", "Address");
+            ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "DepartmentId", "Address");
         ViewData["RoleId"] = new SelectList(_slotService.GetList(), "RoleId", "RoleName");
             return Page();
         }
 
         [BindProperty]
         public Account Account { get; set; } = default!;
-        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
           if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _accountService.Create(Account);
+            _accService.Create(Account);
 
             return RedirectToPage("./Index");
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }

@@ -13,15 +13,15 @@ namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class EditModel : PageModel
     {
-        private readonly IAccountService _accountService;
+        private readonly IAccountService _accService;
         private readonly ISlotService _slotService;
         private readonly IDepartmentService _departmentService;
 
-        public EditModel(IAccountService accountService, 
+        public EditModel(IAccountService accService, 
                         ISlotService slotService, 
                         IDepartmentService departmentService)
         {
-            _accountService = accountService;
+            _accService = accService;
             _slotService = slotService;
             _departmentService = departmentService;
         }
@@ -31,17 +31,13 @@ namespace EduBook.Presentation.Pages.Admin.Customer
 
         public IActionResult OnGet(int? id)
         {
-            var role = HttpContext.Session.GetInt32("role");
-            if (role != 1)
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
             {
-                return Redirect("/Customer/CustomerHomePage");
-            }
-            if (id == null)
-            {
-                return NotFound();
+                return authorizationResult;
             }
 
-            var account =  _accountService.GetById((int)id);
+            var account =  _accService.GetById((int)id);
             if (account == null)
             {
                 return NotFound();
@@ -61,9 +57,25 @@ namespace EduBook.Presentation.Pages.Admin.Customer
                 return Page();
             }
 
-            _accountService.Update(Account);
+            _accService.Update(Account);
 
             return RedirectToPage("./Index");
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }
