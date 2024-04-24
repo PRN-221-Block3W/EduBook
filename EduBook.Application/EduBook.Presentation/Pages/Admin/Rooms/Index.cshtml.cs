@@ -6,27 +6,48 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class IndexModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
-
-        public IndexModel()
+        private readonly IRoomService _service;
+        private readonly IAccountService _accService;
+        public IndexModel(IRoomService service, IAccountService accService)
         {
-            _context = new EduBookContext();
+            _service = service;
+            _accService = accService;
+
         }
 
         public IList<Room> Room { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_context.Rooms != null)
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
             {
-                Room = await _context.Rooms
-                .Include(r => r.Department).ToListAsync();
+                return authorizationResult;
             }
+            Room = _service.GetList();
+            return Page();
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }

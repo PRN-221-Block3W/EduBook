@@ -6,22 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class DetailsModel : PageModel
     {
         private readonly EduBook.BusinessObject.EduBookContext _context;
-
-        public DetailsModel(EduBook.BusinessObject.EduBookContext context)
+        private readonly IAccountService _accService;
+        public DetailsModel(EduBook.BusinessObject.EduBookContext context, IAccountService accService)
         {
             _context = context;
+            _accService = accService;
         }
 
-      public Room Room { get; set; } = default!; 
+        public Room Room { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
+            {
+                return authorizationResult;
+            }
             if (id == null || _context.Rooms == null)
             {
                 return NotFound();
@@ -32,11 +39,27 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Room = room;
             }
             return Page();
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }

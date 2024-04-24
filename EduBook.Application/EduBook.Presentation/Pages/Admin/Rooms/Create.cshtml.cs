@@ -6,21 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class CreateModel : PageModel
     {
         private readonly EduBook.BusinessObject.EduBookContext _context;
-
-        public CreateModel()
+        private readonly IAccountService _accService;
+        public CreateModel(IAccountService accService)
         {
             _context = new EduBookContext();
+            _accService = accService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
+            {
+                return authorizationResult;
+            }
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
             return Page();
         }
 
@@ -40,6 +47,22 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }

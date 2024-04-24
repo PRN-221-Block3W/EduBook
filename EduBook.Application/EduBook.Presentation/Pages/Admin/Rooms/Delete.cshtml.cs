@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class DeleteModel : PageModel
     {
         private readonly EduBook.BusinessObject.EduBookContext _context;
-
-        public DeleteModel(EduBook.BusinessObject.EduBookContext context)
+        private readonly IAccountService _accService;
+        public DeleteModel(IAccountService accService)
         {
-            _context = context;
+            _context = new EduBookContext();
+            _accService = accService;
         }
 
         [BindProperty]
@@ -23,6 +25,15 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
+            {
+                return authorizationResult;
+            }
+            if (id == null || _context.Rooms == null)
+            {
+                return NotFound();
+            }
             if (id == null || _context.Rooms == null)
             {
                 return NotFound();
@@ -57,6 +68,22 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }

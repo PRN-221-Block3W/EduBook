@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class EditModel : PageModel
     {
         private readonly EduBook.BusinessObject.EduBookContext _context;
-
-        public EditModel(EduBook.BusinessObject.EduBookContext context)
+        private readonly IAccountService _accService;
+        public EditModel(IAccountService _accService)
         {
-            _context = context;
+            _context = new EduBookContext();
+            this._accService = _accService;
         }
 
         [BindProperty]
@@ -24,18 +26,23 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var authorizationResult = Authorized();
+            if (authorizationResult != null)
+            {
+                return authorizationResult;
+            }
             if (id == null || _context.Rooms == null)
             {
                 return NotFound();
             }
 
-            var room =  await _context.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            var room = await _context.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
             if (room == null)
             {
                 return NotFound();
             }
             Room = room;
-           ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
             return Page();
         }
 
@@ -71,7 +78,24 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 
         private bool RoomExists(int id)
         {
-          return (_context.Rooms?.Any(e => e.RoomId == id)).GetValueOrDefault();
+            return (_context.Rooms?.Any(e => e.RoomId == id)).GetValueOrDefault();
+        }
+
+
+        private IActionResult Authorized()
+        {
+            var id = HttpContext.Session.GetInt32("AccountId");
+            if (id == null)
+            {
+                return RedirectToPage("/LoginPage/Login");
+            }
+            var role = _accService.GetById((int)id).RoleId;
+            if (role != 1)
+            {
+                return RedirectToPage("/Customer/CustomerHomePage");
+            }
+
+            return null; // Return null if authorization succeeds
         }
     }
 }
