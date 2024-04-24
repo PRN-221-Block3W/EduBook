@@ -55,6 +55,9 @@ namespace EduBook.Presentation
 
             services.AddScoped<IBookingDetailsRepository, BookingDetailsRepository>();
             services.AddScoped<IBookingDetailsService, BookingDetailsService>();
+
+            services.AddScoped<ISlotRepository, SlotRepository>();
+            services.AddScoped<ISlotService, SlotService>();
         }
     }
 }
