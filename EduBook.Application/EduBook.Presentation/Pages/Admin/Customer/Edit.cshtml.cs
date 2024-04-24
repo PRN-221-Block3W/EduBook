@@ -7,72 +7,63 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
 
 namespace EduBook.Presentation.Pages.Admin.Customer
 {
     public class EditModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IAccountService _accountService;
+        private readonly ISlotService _slotService;
+        private readonly IDepartmentService _departmentService;
 
-        public EditModel(EduBook.BusinessObject.EduBookContext context)
+        public EditModel(IAccountService accountService, 
+                        ISlotService slotService, 
+                        IDepartmentService departmentService)
         {
-            _context = context;
+            _accountService = accountService;
+            _slotService = slotService;
+            _departmentService = departmentService;
         }
 
         [BindProperty]
         public Account Account { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || _context.Accounts == null)
+            var role = HttpContext.Session.GetInt32("role");
+            if (role != 1)
+            {
+                return Redirect("/Customer/CustomerHomePage");
+            }
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var account =  await _context.Accounts.FirstOrDefaultAsync(m => m.AccountId == id);
+            var account =  _accountService.GetById((int)id);
             if (account == null)
             {
                 return NotFound();
             }
             Account = account;
-           ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
-           ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+           ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "DepartmentId", "Address");
+           ViewData["RoleId"] = new SelectList(_departmentService.GetList(), "RoleId", "RoleName");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Account).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccountExists(Account.AccountId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _accountService.Update(Account);
 
             return RedirectToPage("./Index");
-        }
-
-        private bool AccountExists(int id)
-        {
-          return (_context.Accounts?.Any(e => e.AccountId == id)).GetValueOrDefault();
         }
     }
 }
