@@ -19,7 +19,9 @@ namespace EduBook.BusinessObject
         public double WidthRoom { get; set; }
         public bool Status { get; set; }
         public string? ImageRoom { get; set; }
+        public int? DepartmentId { get; set; }
 
+        public virtual Department? Department { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<RoomEquipment> RoomEquipments { get; set; }
         public virtual ICollection<Slot> Slots { get; set; }
