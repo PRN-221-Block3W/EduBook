@@ -56,7 +56,10 @@
 						<input asp-for="Password" name="Password" id="Password" type="password" class="input100" placeholder="Enter password">
 						<span asp-validation-for="Password" class="focus-input100"></span>
 					</div>
-
+					@if (!string.IsNullOrEmpty(ViewData["ErrMsg"] as string))
+					{
+						<p class="alert alert-danger" role="alert">@ViewData["ErrMsg"]</p>
+					}
 					<div class="flex-sb-m w-full p-b-30">
 						<div>
 							<a href="/AccountPage/Create" class="txt1">

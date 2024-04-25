@@ -33,16 +33,17 @@ namespace EduBook.Presentation.Pages.LoginPage
 				HttpContext.Session.SetString("Email", Email);
 				HttpContext.Session.SetInt32("role", account.RoleId);
 				HttpContext.Session.SetInt32("AccountId", account.AccountId);
-			}
-			var role = accountService.GetRoles().FirstOrDefault(p => p.RoleId == account.RoleId);
-			if (role.RoleName.ToLower().Equals("customer"))
-			{
-				return Redirect("/Customer/CustomerHomePage");
-			}
-			if (role.RoleName.ToLower().Equals("admin"))
-			{
-				return Redirect("/Admin/Dashboard");
-			}
+                var role = accountService.GetRoles().FirstOrDefault(p => p.RoleId == account.RoleId);
+                if (role.RoleName.Equals("customer", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Redirect("/Customer/CustomerHomePage");
+                }
+                if (role.RoleName.Equals("admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Redirect("/Admin/Dashboard");
+                }
+            }
+			ViewData["ErrMsg"] = "Incorrect email or password, please try again";
 			return Page();
 		}
 	}

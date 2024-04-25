@@ -29,26 +29,25 @@ namespace EduBook.BusinessObject
         public virtual DbSet<RoomEquipment> RoomEquipments { get; set; } = null!;
         public virtual DbSet<Slot> Slots { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(GetConnection());
-            }
-        }
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			if (!optionsBuilder.IsConfigured)
+			{
+				optionsBuilder.UseSqlServer(GetConnectionString());
+			}
+		}
 
-        private string GetConnection()
-        {
-            IConfiguration config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
-            var conStr = config["ConnectionStrings:ConnectionStrings"];
-            return conStr;
-        }
+		private string GetConnectionString()
+		{
+			IConfiguration config = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json", true, true)
+				.Build();
+			var strConn = config["ConnectionStrings:DefaultConnectionStringDB"];
+			return strConn;
+		}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>(entity =>
             {
@@ -61,6 +60,10 @@ namespace EduBook.BusinessObject
                 entity.Property(e => e.Dob).HasColumnType("date");
 
                 entity.Property(e => e.Email).HasMaxLength(50);
+
+                entity.Property(e => e.ImageAccount)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Password).HasMaxLength(50);
 
@@ -144,8 +147,6 @@ namespace EduBook.BusinessObject
 
                 entity.Property(e => e.EndTime).HasColumnType("date");
 
-                entity.Property(e => e.ImageDepartment).HasMaxLength(100);
-
                 entity.Property(e => e.StartTime).HasColumnType("date");
 
                 entity.Property(e => e.Telephone)
@@ -194,6 +195,10 @@ namespace EduBook.BusinessObject
                 entity.Property(e => e.RoomId).ValueGeneratedNever();
 
                 entity.Property(e => e.Description).HasMaxLength(50);
+
+                entity.Property(e => e.ImageRoom)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RoomName).HasMaxLength(50);
 
