@@ -5,53 +5,63 @@
 }
 
 <h1>Dashboard</h1>
-@*<div class="date">
-<input type="date">
-</div> *@
 <div class="insights">
     <div class="sales">
-        <span class="material-icons">trending_up</span>
+        <span class="material-icons">apartment</span>
         <div class="middle">
             <div class="left">
                 <h3>Total Department</h3>
-                <h1>$25,024</h1>
+                <h1>@Model.TotalDepartmentCount</h1>
             </div>
         </div>
-        <small>Last 24 Hours</small>
     </div>
     <div class="expenses">
-        <span class="material-icons">local_mall</span>
+        <span class="material-icons">meeting_room</span>
         <div class="middle">
             <div class="left">
                 <h3>Total Room</h3>
-                <h1>$25,024</h1>
+                <h1>@Model.TotalRoomCount</h1>
             </div>
         </div>
-        <small>Last 24 Hours</small>
     </div>
     <div class="income">
-        <span class="material-icons">stacked_line_chart</span>
+        <span class="material-icons">assignment</span>
         <div class="middle">
             <div class="left">
                 <h3>Total Booking</h3>
-                <h1>$25,024</h1>
+                <h1>@Model.TotalBookingCount</h1>
             </div>
         </div>
-        <small>Last 24 Hours</small>
     </div>
 </div>
 <div class="recent_order">
     <h2>Recent Booking</h2>
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Product Name</th>
-                <th>Product Number</th>
-                <th>Payments</th>
-                <th>Status</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].BookingDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].BookingDetails)
+                </th>
             </tr>
         </thead>
         <tbody>
+            @foreach (var item in Model.Booking)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

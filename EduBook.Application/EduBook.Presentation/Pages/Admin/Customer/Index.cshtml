@@ -34,12 +34,9 @@
 					@Html.DisplayNameFor(model => model.Account[0].Password)
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.Account[0].Status)
-				</th>
-				<th>
 					@Html.DisplayNameFor(model => model.Account[0].Role)
 				</th>
-				<th></th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,14 +62,21 @@
 						@Html.DisplayFor(modelItem => item.Password)
 					</td>
 					<td>
-						@Html.DisplayFor(modelItem => item.Status)
-					</td>
-					<td>
 						@Html.DisplayFor(modelItem => item.Role.RoleName)
 					</td>
+					@{
+						if (item.Status)
+						{
+							<td>Active</td>
+						}
+						else
+						{
+							<td>Deactive</td>
+						}
+					}
 					<td>
-						<a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a> |
-						<a asp-page="./Details" asp-route-id="@item.AccountId">Details</a> |
+						<a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a>
+						<a asp-page="./Details" asp-route-id="@item.AccountId">Details</a>
 						<a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
 					</td>
 				</tr>

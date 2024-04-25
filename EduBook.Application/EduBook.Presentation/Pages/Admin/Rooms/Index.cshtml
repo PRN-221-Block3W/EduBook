@@ -2,67 +2,75 @@
 @model EduBook.Presentation.Pages.Admin.Rooms.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+	Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
 }
+
 <h1>Room Manager</h1>
 
 <a asp-page="Create">
-    <span class="material-icons">add</span>
+	<span class="material-icons">add</span>
 </a>
 <div class="recent_order">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room[0].RoomName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room[0].Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room[0].LengthRoom)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room[0].WidthRoom)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room[0].Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room[0].Department)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Room)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RoomName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LengthRoom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.WidthRoom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Department.Address)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.RoomId">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.RoomId">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Room[0].RoomName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Room[0].Description)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Room[0].LengthRoom)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Room[0].WidthRoom)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Room[0].Status)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Room[0].Department.DepartmentName)
+				</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.Room)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.RoomName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Description)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.LengthRoom)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.WidthRoom)
+					</td>
+					@{
+						if (item.Status)
+						{
+							<td>Active</td>
+						}
+						else
+						{
+							<td>Deactive</td>
+						}
+					}
+					<td>
+						@Html.DisplayFor(modelItem => item.Department.DepartmentName)
+					</td>
+					<td>
+						<a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a>
+						<a asp-page="./Details" asp-route-id="@item.RoomId">Details</a>
+						<a asp-page="./Delete" asp-route-id="@item.RoomId">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 </div>
