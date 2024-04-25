@@ -12,12 +12,13 @@ namespace EduBook.Presentation.Pages.Admin.Departments
 {
     public class DeleteModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
         private readonly IAccountService _accService;
-        public DeleteModel(IAccountService _accService)
+        private readonly IDepartmentService _depService;
+
+        public DeleteModel(IAccountService _accService, IDepartmentService depService)
         {
-            _context = new EduBookContext();
             this._accService = _accService;
+            _depService = depService;
         }
 
         [BindProperty]
@@ -30,12 +31,12 @@ namespace EduBook.Presentation.Pages.Admin.Departments
             {
                 return authorizationResult;
             }
-            if (id == null || _context.Departments == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var department = await _context.Departments.FirstOrDefaultAsync(m => m.DepartmentId == id);
+            var department = _depService.GetById((int)id);
 
             if (department == null)
             {
@@ -50,17 +51,16 @@ namespace EduBook.Presentation.Pages.Admin.Departments
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Departments == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var department = await _context.Departments.FindAsync(id);
+            var department = _depService.GetById((int)id);
 
             if (department != null)
             {
                 Department = department;
-                _context.Departments.Remove(Department);
-                await _context.SaveChangesAsync();
+                _depService.Remove(Department);
             }
 
             return RedirectToPage("./Index");

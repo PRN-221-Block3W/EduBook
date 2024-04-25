@@ -13,12 +13,14 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class EditModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IRoomService _roomService;
         private readonly IAccountService _accService;
-        public EditModel(IAccountService _accService)
+        private readonly IDepartmentService _depService;
+        public EditModel(IAccountService _accService, IRoomService _roomService, IDepartmentService depService)
         {
-            _context = new EduBookContext();
+            this._roomService = _roomService;
             this._accService = _accService;
+            _depService = depService;
         }
 
         [BindProperty]
@@ -31,18 +33,18 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             {
                 return authorizationResult;
             }
-            if (id == null || _context.Rooms == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            var room = _roomService.GetById((int)id);
             if (room == null)
             {
                 return NotFound();
             }
             Room = room;
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
+            ViewData["DepartmentId"] = new SelectList(_depService.GetList(), "DepartmentId", "Address");
             return Page();
         }
 
@@ -55,11 +57,9 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
                 return Page();
             }
 
-            _context.Attach(Room).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                _roomService.Update(Room);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,7 +78,8 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 
         private bool RoomExists(int id)
         {
-            return (_context.Rooms?.Any(e => e.RoomId == id)).GetValueOrDefault();
+            var room = _roomService.GetById(id);
+            return room != null;
         }
 
 

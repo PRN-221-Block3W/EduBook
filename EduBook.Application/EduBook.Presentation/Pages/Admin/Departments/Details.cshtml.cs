@@ -12,11 +12,11 @@ namespace EduBook.Presentation.Pages.Admin.Departments
 {
     public class DetailsModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IDepartmentService _depService;
         private readonly IAccountService _accService;
-        public DetailsModel(IAccountService _accService)
+        public DetailsModel(IAccountService _accService, IDepartmentService _depService)
         {
-            _context = new EduBookContext();
+            this._depService = _depService;
             this._accService = _accService;
         }
 
@@ -29,12 +29,12 @@ namespace EduBook.Presentation.Pages.Admin.Departments
             {
                 return authorizationResult;
             }
-            if (id == null || _context.Departments == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var department = await _context.Departments.FirstOrDefaultAsync(m => m.DepartmentId == id);
+            var department = _depService.GetById((int)id);
             if (department == null)
             {
                 return NotFound();
