@@ -55,7 +55,7 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
         {
             var id = HttpContext.Session.GetInt32("AccountId");
             var role = _accService.GetById((int)id).RoleId;
-            if (id == null || role != 1)
+            if (id == null || role != 1 || role == null)
             {
                 return RedirectToPage("/Error");
             }
