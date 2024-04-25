@@ -148,11 +148,6 @@ namespace EduBook.BusinessObject
                 entity.Property(e => e.EndTime).HasColumnType("date");
 
                 entity.Property(e => e.StartTime).HasColumnType("date");
-
-                entity.Property(e => e.Telephone)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("telephone");
             });
 
             modelBuilder.Entity<Equipment>(entity =>

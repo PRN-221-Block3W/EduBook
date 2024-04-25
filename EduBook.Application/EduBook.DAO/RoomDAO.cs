@@ -41,16 +41,18 @@ namespace EduBook.DAO
 		public List<Room> GetList()
 		{
 			var list =_context.Rooms
-				//.Where(x => x.Status == true)
-				.ToList();
+                .Where(x => x.Status == true)
+                .Include(r => r.Department)
+                .ToList();
 			return list;
 		}
 
 		public Room GetById(int id)
 		{
 			return _context.Rooms
-				//.Where(x => x.Status == true)
-					.FirstOrDefault(x => x.RoomId == id);
+				.Include(r => r.Department)
+				.Where(x => x.Status == true)
+				.FirstOrDefault(x => x.RoomId == id);
 		}
 
 		public bool Update(Room room)

@@ -15,9 +15,12 @@ namespace EduBook.Presentation.Pages.Admin.Customer
         private readonly IAccountService _accService;
         private readonly IDepartmentService _departmentService;
         private readonly ISlotService _slotService;
-        public CreateModel(IAccountService accService)
+
+        public CreateModel(IAccountService accService, IDepartmentService departmentService, ISlotService slotService)
         {
             _accService = accService;
+            _departmentService = departmentService;
+            _slotService = slotService;
         }
 
         public IActionResult OnGet()
