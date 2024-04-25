@@ -60,6 +60,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Total)
                     </td>
+                    <td>
+                        <a asp-page="./BookingDetails" asp-route-id="@item.BookingId">Details</a>
+                    </td>
                 </tr>
             }
         </tbody>
