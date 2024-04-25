@@ -6,32 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EduBook.BusinessObject;
+using EduBook.Service.IService;
+using EduBook.Service.ClassService;
 
 namespace EduBook.Presentation.Pages.Admin
 {
     public class BookingDetailsModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IBookingDetailsService _service;
 
-        public BookingDetailsModel()
-        {
-            _context = new EduBookContext();
-        }
+		public BookingDetailsModel(IBookingDetailsService service)
+		{
+			_service = service;
+		}
 
         public IList<BookingDetail> BookingDetail { get;set; } = default!;
 
-        public async Task OnGetAsync(int? id)
+        public IActionResult OnGetAsync(int? id)
         {
-            if (_context.BookingDetails != null || id != null)
+            if (id == null)
             {
-                BookingDetail = await _context.BookingDetails
-                .Where(x => x.BookingId == id)
-                .Include(b => b.Account)
-                .Include(b => b.Booking)
-                .Include(b => b.Slot)
-                .Include(b => b.Slot.Room).
-				ToListAsync();
+				return NotFound();
             }
+			BookingDetail = _service.GetListByBookingId((int)id);
+            return Page();
         }
     }
 }

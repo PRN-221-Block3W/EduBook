@@ -26,7 +26,13 @@ namespace EduBook.Repository.ClassRepository
             return BookingDetailDAO.Instance.GetBookingDetailById(id);
         }
 
-        public IList<BookingDetail> GetList()
+		public IList<BookingDetail> GetListByBookingId(int bookingId)
+        {
+            return BookingDetailDAO.Instance.GetListByBookingId(bookingId);
+        }
+
+
+		public IList<BookingDetail> GetList()
         {
             return BookingDetailDAO.Instance.GetList();
         }

@@ -10,7 +10,9 @@ namespace EduBook.Repository.IRepository
 {
     public interface IBookingDetailsRepository
     {
-         IList<BookingDetail> GetList();
+         IList<BookingDetail> GetListByBookingId(int bookingId);
+
+		 IList<BookingDetail> GetList();
 
          BookingDetail GetBookingDetailById(int id);
 
