@@ -44,6 +44,7 @@ namespace EduBook.BusinessObject
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true)
                 .Build();
+
             var conStr = config["ConnectionStrings:ConnectionStrings"];
             return conStr;
         }
@@ -147,11 +148,6 @@ namespace EduBook.BusinessObject
                 entity.Property(e => e.ImageDepartment).HasMaxLength(100);
 
                 entity.Property(e => e.StartTime).HasColumnType("date");
-
-                entity.Property(e => e.Telephone)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("telephone");
             });
 
             modelBuilder.Entity<Equipment>(entity =>
