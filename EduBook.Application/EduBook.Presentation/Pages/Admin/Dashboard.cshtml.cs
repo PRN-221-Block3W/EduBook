@@ -11,20 +11,31 @@ namespace EduBook.Presentation.Pages.Admin
         private readonly IDepartmentService _departmentService;
         private readonly IRoomService _roomService;
         private readonly IAccountService _accService;
-
-
+        private readonly IBookingService _bookingService;
+       
+        [BindProperty]
+        public int TotalDepartmentCount { get; set; }
+		
+        [BindProperty]
+		public int TotalRoomCount { get; set; }
+        
+        [BindProperty]
+		public int TotalBookingCount { get; set; }
+        
         public Account Account { get; set; }
-        public IList<Room> Rooms { get; set; }
+        public IList<Booking> Booking { get; set; }
 
         public DashboardModel(IAccountService accountService,
                         IDepartmentService departmentService,
                         IRoomService roomService,
-                        IAccountService accService)
+                        IAccountService accService,
+                        IBookingService bookingService)
         {
             _accountService = accountService;
             _departmentService = departmentService;
             _roomService = roomService;
             _accService = accService;
+            _bookingService = bookingService;
         }
         public IActionResult OnGet()
         {
@@ -34,8 +45,10 @@ namespace EduBook.Presentation.Pages.Admin
             {
                 return authorizationResult;
             }
-            //Account = _accountService.GetById(0);
-            Rooms = _roomService.GetList();
+            Booking = _bookingService.GetList();
+            TotalBookingCount = Booking.Count; 
+            TotalDepartmentCount = _departmentService.GetList().Count;
+            TotalRoomCount = _roomService.GetList().Count;
             return Page();
         }
 

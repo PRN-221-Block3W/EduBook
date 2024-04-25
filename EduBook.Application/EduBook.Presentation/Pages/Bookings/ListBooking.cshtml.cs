@@ -25,7 +25,7 @@ namespace EduBook.Presentation.Pages.Bookings
         {
             Booking = _bookingService.GetList();
 
-            return Redirect("Tu them nhe !");
+            return Page();
         }
     }
 }
