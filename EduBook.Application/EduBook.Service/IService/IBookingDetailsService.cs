@@ -9,7 +9,9 @@ namespace EduBook.Service.IService
 {
     public interface IBookingDetailsService
     {
-        IList<BookingDetail> GetList();
+        IList<BookingDetail> GetListByBookingId(int bookingId);
+
+		IList<BookingDetail> GetList();
 
         BookingDetail GetBookingDetailById(int id);
 

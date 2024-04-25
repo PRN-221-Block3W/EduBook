@@ -31,7 +31,11 @@ namespace EduBook.Presentation.Pages.Customer
 		public async Task<IActionResult> OnGetAsync()
 		{
 			int? accountId = HttpContext.Session.GetInt32("AccountId");
-			if(accountId != null) {
+			if (accountId == null)
+			{
+				return RedirectToPage("/Error");
+			}
+			if (accountId != null) {
                 customer = accountService.GetById((int)accountId);
             }
             if (!string.IsNullOrEmpty(RoomName))
@@ -41,11 +45,6 @@ namespace EduBook.Presentation.Pages.Customer
 
 			Room = roomService.GetList();
 			return Page();
-		}
-		public async Task<IActionResult> OnPostLogoutAsync()
-		{
-			HttpContext.Session.Remove("AccountId");
-			return Redirect("/Customer/HomePage");
 		}
 		
     }

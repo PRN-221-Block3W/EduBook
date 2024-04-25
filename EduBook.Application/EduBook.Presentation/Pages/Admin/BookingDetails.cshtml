@@ -1,0 +1,124 @@
+﻿@page
+@model EduBook.Presentation.Pages.Admin.BookingDetailsModel
+
+@{
+	Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+
+}
+<style>
+	.recent_order {
+		margin: 20px auto;
+		padding: 20px;
+		background-color: #f8f9fa;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+		.recent_order h1 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: #333;
+		}
+
+		.recent_order form {
+			max-width: 400px;
+			margin: 0 auto;
+		}
+
+		.recent_order .form-group {
+			margin-bottom: 20px;
+		}
+
+		.recent_order label {
+			font-weight: bold;
+		}
+
+		.recent_order input[type="text"],
+		.recent_order input[type="time"] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		.recent_order input[type="submit"] {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+			.recent_order input[type="submit"]:hover {
+				background-color: #0056b3;
+			}
+
+		.recent_order .text-danger {
+			color: #dc3545;
+			font-size: 14px;
+		}
+
+		.recent_order a {
+			color: #007bff;
+			text-decoration: none;
+		}
+
+			.recent_order a:hover {
+				text-decoration: underline;
+			}
+</style>
+<div class="recent_order">
+	<h1>BookingDetails</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.BookingDetail[0].Account.UserName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.BookingDetail[0].Booking.BookingDate)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.BookingDetail[0].Slot.Room.RoomName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.BookingDetail[0].Slot.StartTime)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.BookingDetail[0].Slot.EndTime)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.BookingDetail[0].Slot.Price)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.BookingDetail)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Account.UserName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Booking.BookingDate)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Slot.Room.RoomName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Slot.StartTime)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Slot.EndTime)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Slot.Price)
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<a asp-page="./Dashboard">Back to List</a>
+</div>

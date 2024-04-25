@@ -32,8 +32,13 @@ namespace EduBook.Service.ClassService
         {
             return _repo.GetBookingDetailById(id);
         }
+		public IList<BookingDetail> GetListByBookingId(int bookingId)
+        {
+            return _repo.GetListByBookingId(bookingId);
+        }
 
-        public IList<BookingDetail> GetList()
+
+		public IList<BookingDetail> GetList()
         {
             return _repo.GetList();
         }
