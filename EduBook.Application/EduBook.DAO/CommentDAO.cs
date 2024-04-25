@@ -44,8 +44,14 @@ namespace EduBook.DAO
 				.Where(x => x.Status == true)
 				.ToList();
 		}
-
-		public Comment GetById(int id)
+        public IList<Comment> GetListOfRoom(int roomId)
+        {
+            return _context.Comments
+				.Include(x => x.Account)
+                .Where(x => x.Status == true && x.RoomId == roomId)
+                .ToList();
+        }
+        public Comment GetById(int id)
 		{
 			return _context.Comments
 				.Where(x => x.Status == true)
