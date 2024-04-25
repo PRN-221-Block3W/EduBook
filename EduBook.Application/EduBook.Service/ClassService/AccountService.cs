@@ -29,5 +29,7 @@ namespace EduBook.Service.ClassService
 		public bool Remove(Account acc) => _repo.Remove(acc);
 
 		public bool Update(Account acc) => _repo.Update(acc);
+
+		public Account GetByEmail(string email) => _repo.GetByEmail(email);
 	}
 }

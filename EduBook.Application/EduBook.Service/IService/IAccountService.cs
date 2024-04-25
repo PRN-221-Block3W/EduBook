@@ -16,5 +16,7 @@ namespace EduBook.Service.IService
         public Account GetById(int id);
         public bool Update(Account acc);
         public bool Remove(Account acc);
-    }
+        Account GetByEmail(string email);
+
+	}
 }
