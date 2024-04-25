@@ -14,5 +14,6 @@ namespace EduBook.Service.IService
         public RoomEquipment GetById(int id);
         public bool Update(RoomEquipment roomEq);
         public bool Remove(RoomEquipment roomEq);
+        IList<RoomEquipment> GetListRoomEquip(int roomId);
     }
 }

@@ -168,7 +168,7 @@
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Edu Book</div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h4>
-                                                        <a asp-page="./RoomDetails" asp-route-id="@item.RoomId">@Html.DisplayFor(modelItem => item.RoomName)</a>
+                                                        <a asp-page="/Rooms/DetailsRoom" asp-route-id="@item.RoomId">@Html.DisplayFor(modelItem => item.RoomName)</a>
                                                     </h4>
                                                     <p>
                                                         Lenght Room: @Html.DisplayFor(modelItem => item.LengthRoom)

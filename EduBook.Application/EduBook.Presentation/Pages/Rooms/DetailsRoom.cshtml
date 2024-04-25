@@ -5,51 +5,381 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<div>
-    <h4>Room</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room.RoomName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.RoomName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room.LengthRoom)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.LengthRoom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room.WidthRoom)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.WidthRoom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room.Department)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.Department.Address)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Room?.RoomId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+<head>
+    <meta charset="utf-8">
+    <title>Cat Coffee Platform</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+    <!-- Navbar start -->
+    <div class="container-fluid fixed-top">
+        <div class="container topbar bg-primary d-none d-lg-block">
+            <div class="d-flex justify-content-between">
+                <div class="top-info ps-2">
+                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Group 2</a></small>
+                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">group2@fpt.edu.vn</a></small>
+                </div>
+                <div class="top-link pe-2">
+                    @*                     <a asp-page="/Customer/BookingHistory" class="text-white"><small class="text-white mx-2">Booking History</small>/</a>
+                    *@
+                </div>
+            </div>
+        </div>
+        <div class="container px-0">
+            <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                <a asp-page="./Customer/CustomerHomePage" class="navbar-brand"><h1 class="text-primary display-6">EDU BOOKING</h1></a>
+                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars text-primary"></span>
+                </button>
+                <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                    <div class="navbar-nav mx-auto">
+                    </div>
+                    <div class="d-flex m-3 me-0">
+                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                        @if (Model.customer != null)
+                        {
+                            <div class="nav-item dropdown">
+                                <a href="#" class="my-auto nav-link dropdown-toggle active" data-bs-toggle="dropdown"> <i class="fas fa-user fa-2x"></i></a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a asp-page="/Customer/BookingHistory" class="dropdown-item active">History Booking</a>
+                                    <a asp-page="/Customer/MyProfile" asp-route-id="@Model.customer.AccountId" class="dropdown-item">My Profile</a>
+                                    <form method="post" asp-page-handler="logout">
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-page="/LoginPage/Login" class="my-auto">
+                                <i class="fas fa-sign-in-alt fa-2x"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by cat type</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <form method="get" asp-page="./SearchShop">
+                            <input type="text" id="catTypeName" name="CatTypeName" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <button type="submit" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Search End -->
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Room Detail</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a asp-page="./HomePage">Home</a></li>
+            <li class="breadcrumb-item active text-white">Room Detail</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+    <!-- Single Product Start -->
+    <div class="container-fluid py-5 mt-5">
+        <div class="container py-5">
+            <div class="row g-4 mb-5">
+                <div class="col-lg-8 col-xl-9">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="border rounded fruite-img">
+                                <a href="#">
+                                    <img src="@Html.DisplayFor(model => model.Room.ImageRoom)" class="img-fluid rounded" alt="Image">
+                                </a>
+                            </div>
+                        </div>
+                        <style>
+                            .fruite-img {
+                                width: 100%;
+                                height: 200px;
+                                overflow: hidden;
+                            }
+
+                                .fruite-img img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+                        </style>
+                        <div class="col-lg-6">
+                            <h4 class="fw-bold mb-3">@Html.DisplayFor(model => model.Room.RoomName)</h4> <span>--</span> <h4 class="fw-bold mb-3">@Html.DisplayFor(model => model.Room.Department.DepartmentName)</h4>
+                            @functions {
+                                public string DisplayStarRating(int rating, bool isEditable)
+                                {
+                                    string stars = "";
+                                    for (int i = 1; i <= 5; i++)
+                                    {
+                                        string starClass = i <= rating ? "fas fa-star" : "far fa-star";
+                                        if (isEditable)
+                                        {
+                                            stars += $"<p type='text' class='{starClass} editable-star' data-rating='{i}'></p>";
+                                        }
+                                        else
+                                        {
+                                            stars += $"<i class='{starClass}'></i>";
+                                        }
+                                    }
+                                    return stars;
+                                }
+                            }
+                            <div id="ratingPopup">
+                                @if (Model.customer != null)
+                                {
+
+
+                                    <!-- Modal edit rate Start -->
+                                    <div class="modal fade" id="rateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                                            <div class="modal-content rounded-0">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit rating here</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body d-flex align-items-center">
+                                                    <div class="input-group w-100 mx-auto d-flex">
+                                                        <form method="post" asp-page-handler="EditRating" asp-route-id="@Model.Room.RoomId">
+                                                            <div class="star-rating" id="popupRating">
+                                                                @for (int i = 1; i <= 5; i++)
+                                                                {
+                                                                    <button type="button" class="star" data-rating="@i"><i class="fas fa-star star1"></i></button>
+                                                                }
+                                                            </div>
+                                                            <input type="hidden" id="selectedRating" name="CustomerRating" value="0" />
+                                                            <button type="submit">Save</button>
+                                                            <button type="button" id="cancelRating">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal edit rate End -->
+                                }
+                                <style>
+                                    .star-rating {
+                                        display: flex;
+                                    }
+
+                                    .star {
+                                        border: none;
+                                        background: none;
+                                        cursor: pointer;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
+
+                                    .fa-star {
+                                        font-size: 18px;
+                                        color: #ffd700;
+                                    }
+
+                                    .star1 {
+                                        font-size: 18px;
+                                        color: gray;
+                                    }
+
+                                    .fa-star.checked {
+                                        color: gold;
+                                    }
+
+                                    .rating-button .fas {
+                                        color: #ffd700;
+                                        font-size: 18px;
+                                    }
+
+                                    .padding-custom {
+                                        padding: 10px 20px;
+                                    }
+                                </style>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var starButtons = document.querySelectorAll('#popupRating button');
+                                        var selectedRatingInput = document.getElementById('selectedRating');
+                                        starButtons.forEach(function (button) {
+                                            button.addEventListener('click', function () {
+                                                var rating = button.getAttribute('data-rating');
+                                                setRating(rating);
+                                            });
+                                        });
+
+                                        function setRating(rating) {
+                                            selectedRatingInput.value = rating;
+
+                                            starButtons.forEach(function (button) {
+                                                button.querySelector('i').classList.remove('checked');
+                                            });
+
+                                            for (var i = 1; i <= rating; i++) {
+                                                var starButton = document.querySelector('#popupRating button[data-rating="' + i + '"]');
+                                                starButton.querySelector('i').classList.add('checked');
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                            <p class="mb-3">
+                                Desciption: @Html.DisplayFor(model => model.Room.Description)</br>
+                                Length: @Html.DisplayFor(model => model.Room.LengthRoom)</br>
+                                Width: @Html.DisplayFor(model => model.Room.WidthRoom)</br>
+                            </p>
+
+
+                            @if (Model.customer != null)
+                            {
+                                <a asp-page="/Customer/BookingPage" asp-route-id="@Model.Room.RoomId" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Book now</a>
+                            }
+                            else
+                            {
+                                <a asp-page="/LoginPage/Login" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-sign-in-alt me-2 text-primary"></i> Login to book</a>
+                            }
+                        </div>
+                        <div class="col-lg-12">
+                            <nav>
+                                <div class="nav nav-tabs mb-3">
+
+                                    <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                            id="nav-cat-tab" data-bs-toggle="tab" data-bs-target="#nav-cat"
+                                            aria-controls="nav-cat" aria-selected="false">
+                                        Equiment Room
+                                    </button>
+
+                                </div>
+                            </nav>
+                            <div class="tab-content mb-5">
+                                <div class="tab-pane active" id="nav-cat" role="tabpanel" aria-labelledby="nav-cat-tab">
+                                    @foreach (var item in Model.RoomEquipment)
+                                    {
+                                        <span>--------------------------------------------------------</span>
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">@Html.DisplayFor(modelItem => item.Equipment.Manufacture.ManufactureName)</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>@Html.DisplayFor(modelItem => item.Equipment.EquipmentName)</h5>
+                                            </div>
+                                            <p>
+                                                Quantity: @Html.DisplayFor(modelItem => item.Quantity)
+                                            </p>
+                                            <p>
+                                                @Html.DisplayFor(modelItem => item.Equipment.Description)
+                                            </p>
+                                            <p>
+                                                Manufacture Description: @Html.DisplayFor(modelItem => item.Equipment.Description)
+                                            </p>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body py-1">
+        <form method="post">
+            <div>
+                <label for="exampleFormControlTextarea1" class="visually-hidden">
+                    Comment
+                </label>
+                <textarea class="form-control form-control-sm border border-2 rounded-1"
+                          id="exampleFormControlTextarea1"
+                          style="height: 50px"
+                          placeholder="Add a comment..."
+                          minlength="3"
+                          maxlength="255"
+                          required asp-for="@Model.Commnent.Context"></textarea>
+            </div>
+            <footer class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-link btn-sm me-2 text-decoration-none">
+                    Cancel
+                </button>
+                <button type="submit"
+                        class="btn btn-primary btn-sm">
+                    Submit
+                </button>
+            </footer>
+        </form>
+    </div>
+
+
+    <aside class="d-flex justify-content-between align-items-center my-4">
+        <h4 class="h6">Total comment: @Model.countCmt</h4>
+    </aside>
+    @foreach (var item in Model.ListComment)
+    {
+        <div style="padding-top:10px">
+            <article class="card bg-light" >
+                <header class="card-header border-0 bg-transparent d-flex align-items-center">
+                    <div>
+                        <a class="fw-semibold text-decoration-none">@item.Account.UserName</a>
+                    </div>
+                </header>
+                <div class="card-body py-2 px-3">
+                    @item.Context
+                </div>
+            </article>
+        </div>
+    }
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
