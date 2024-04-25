@@ -87,4 +87,9 @@
     <ProjectReference Include="..\EduBook.Service\EduBook.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\user\" />
+    <Folder Include="wwwroot\img\room\" />
+  </ItemGroup>
+
 </Project>
