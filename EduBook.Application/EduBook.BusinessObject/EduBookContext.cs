@@ -33,7 +33,7 @@ namespace EduBook.BusinessObject
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				optionsBuilder.UseSqlServer(GetConnectionString());
+				optionsBuilder.UseSqlServer(GetConnection());
 			}
 		}
 
