@@ -9,6 +9,7 @@ builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 });
 builder.Services.AddPackage();
 builder.Services.AddMasterServices();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
