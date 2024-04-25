@@ -24,7 +24,9 @@ namespace EduBook.Service.ClassService
 
 		public List<Comment> GetList() => _repo.GetList();
 
-		public bool Remove(Comment cmt) => _repo.Remove(cmt);
+        public IList<Comment> GetListOfRoom(int roomId) => _repo.GetListOfRoom(roomId);
+
+        public bool Remove(Comment cmt) => _repo.Remove(cmt);
 
 		public bool Update(Comment cmt) => _repo.Update(cmt);
 	}

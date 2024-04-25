@@ -14,5 +14,6 @@ namespace EduBook.Service.IService
         public Comment GetById(int id);
         public bool Update(Comment cmt);
         public bool Remove(Comment cmt);
+        IList<Comment> GetListOfRoom(int roomId);
     }
 }

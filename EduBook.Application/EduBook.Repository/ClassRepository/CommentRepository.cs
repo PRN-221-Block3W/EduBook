@@ -17,7 +17,8 @@ namespace EduBook.Repository.ClassRepository
 
 		public List<Comment> GetList() => CommentDAO.Instance.GetList();
 
-		public bool Remove(Comment cmt) => CommentDAO.Instance.Remove(cmt);
+        public IList<Comment> GetListOfRoom(int roomId) => CommentDAO.Instance.GetListOfRoom(roomId);
+        public bool Remove(Comment cmt) => CommentDAO.Instance.Remove(cmt);
 
 		public bool Update(Comment cmt) => CommentDAO.Instance.Update(cmt);
 	}
