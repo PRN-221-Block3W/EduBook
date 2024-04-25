@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EduBook.BusinessObject
 {
@@ -14,9 +15,14 @@ namespace EduBook.BusinessObject
 
         public int RoomId { get; set; }
         public int DepartmentId { get; set; }
+        [Required(ErrorMessage ="Room name is required")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Invalid input")]
         public string RoomName { get; set; } = null!;
+        [StringLength(255)]
         public string Description { get; set; } = null!;
+        [Range(1, double.MaxValue, ErrorMessage = "Length must > 0")]
         public double LengthRoom { get; set; }
+        [Range(1, double.MaxValue, ErrorMessage = "Width must > 0")]
         public double WidthRoom { get; set; }
         public bool Status { get; set; }
         public string? ImageRoom { get; set; }

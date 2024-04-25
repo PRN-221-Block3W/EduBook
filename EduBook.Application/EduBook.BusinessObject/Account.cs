@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EduBook.BusinessObject
 {
@@ -13,8 +14,11 @@ namespace EduBook.BusinessObject
 
         public int AccountId { get; set; }
         public int RoleId { get; set; }
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Invalid input")]
         public string? UserName { get; set; }
+
         public string? Phone { get; set; }
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Invalid input")]
         public string? Address { get; set; }
         public DateTime? Dob { get; set; }
         public string Email { get; set; } = null!;
