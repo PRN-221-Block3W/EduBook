@@ -12,11 +12,11 @@ namespace EduBook.Presentation.Pages.Admin.Departments
 {
     public class IndexModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IDepartmentService _depService;
         private readonly IAccountService _accService;
-        public IndexModel(IAccountService _accService)
+        public IndexModel(IAccountService _accService, IDepartmentService _depService)
         {
-            _context = new EduBookContext();
+            this._depService = _depService;
             this._accService = _accService;
         }
 
@@ -29,10 +29,7 @@ namespace EduBook.Presentation.Pages.Admin.Departments
             {
                 return authorizationResult;
             }
-            if (_context.Departments != null)
-            {
-                Department = _context.Departments.ToList();
-            }
+            Department =_depService.GetList();
             return Page();
         }
 

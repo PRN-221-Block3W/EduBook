@@ -12,11 +12,11 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class DeleteModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IRoomService _roomService;
         private readonly IAccountService _accService;
-        public DeleteModel(IAccountService accService)
+        public DeleteModel(IAccountService accService, IRoomService _roomService)
         {
-            _context = new EduBookContext();
+           this._roomService = _roomService;
             _accService = accService;
         }
 
@@ -30,16 +30,12 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             {
                 return authorizationResult;
             }
-            if (id == null || _context.Rooms == null)
-            {
-                return NotFound();
-            }
-            if (id == null || _context.Rooms == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            var room = _roomService.GetById((int) id);
 
             if (room == null)
             {
@@ -54,17 +50,16 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Rooms == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var room = await _context.Rooms.FindAsync(id);
+            var room = _roomService.GetById((int)id);
 
             if (room != null)
             {
                 Room = room;
-                _context.Rooms.Remove(Room);
-                await _context.SaveChangesAsync();
+                _roomService.Remove(room);
             }
 
             return RedirectToPage("./Index");

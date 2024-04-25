@@ -12,12 +12,11 @@ namespace EduBook.Presentation.Pages.Admin.Departments
 {
     public class CreateModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
         private readonly IAccountService _accService;
-
-        public CreateModel(IAccountService _accService)
+        private readonly IDepartmentService _depService;
+        public CreateModel(IAccountService _accService, IDepartmentService _depService)
         {
-            _context = new EduBookContext();
+            this._depService = _depService;
             this._accService = _accService;
         }
 
@@ -38,13 +37,12 @@ namespace EduBook.Presentation.Pages.Admin.Departments
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Departments == null || Department == null)
+          if (!ModelState.IsValid || Department == null)
             {
                 return Page();
             }
 
-            _context.Departments.Add(Department);
-            await _context.SaveChangesAsync();
+            _depService.Create(Department);
 
             return RedirectToPage("./Index");
         }

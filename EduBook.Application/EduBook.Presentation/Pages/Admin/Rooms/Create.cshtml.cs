@@ -12,12 +12,15 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class CreateModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IRoomService _roomService;
         private readonly IAccountService _accService;
-        public CreateModel(IAccountService accService)
+        private readonly IDepartmentService _depService;
+
+        public CreateModel(IAccountService accService, IRoomService _roomService, IDepartmentService depService)
         {
-            _context = new EduBookContext();
+            this._roomService = _roomService;
             _accService = accService;
+            _depService = depService;
         }
 
         public IActionResult OnGet()
@@ -27,7 +30,7 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             {
                 return authorizationResult;
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Address");
+            ViewData["DepartmentId"] = new SelectList(_depService.GetList(), "DepartmentId", "Address");
             return Page();
         }
 
@@ -38,13 +41,12 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Rooms == null || Room == null)
+          if (!ModelState.IsValid || Room == null)
             {
                 return Page();
             }
 
-            _context.Rooms.Add(Room);
-            await _context.SaveChangesAsync();
+            _roomService.Create(Room);
 
             return RedirectToPage("./Index");
         }

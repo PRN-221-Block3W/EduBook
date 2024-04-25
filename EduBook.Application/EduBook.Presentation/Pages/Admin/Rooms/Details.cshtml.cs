@@ -12,11 +12,11 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
 {
     public class DetailsModel : PageModel
     {
-        private readonly EduBook.BusinessObject.EduBookContext _context;
+        private readonly IRoomService _roomService;
         private readonly IAccountService _accService;
-        public DetailsModel(EduBook.BusinessObject.EduBookContext context, IAccountService accService)
+        public DetailsModel(IRoomService _roomService, IAccountService accService)
         {
-            _context = context;
+            this._roomService = _roomService;
             _accService = accService;
         }
 
@@ -29,12 +29,12 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
             {
                 return authorizationResult;
             }
-            if (id == null || _context.Rooms == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            var room = _roomService.GetById((int)id);
             if (room == null)
             {
                 return NotFound();
