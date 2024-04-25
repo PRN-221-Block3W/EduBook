@@ -20,6 +20,7 @@ namespace EduBook.BusinessObject
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         public bool Status { get; set; }
+        public string? ImageAccount { get; set; }
 
         public virtual Role Role { get; set; } = null!;
         public virtual ICollection<BookingDetail> BookingDetails { get; set; }
