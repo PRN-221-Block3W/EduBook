@@ -47,6 +47,7 @@ namespace EduBook.DAO
 			var cuslist = GetList().OrderByDescending(x => x.AccountId).ToList();
 
 			customer.Status = true;
+			customer.RoleId = 2;
 			customer.AccountId = cuslist[0].AccountId + 1;
 			_context.Accounts.Add(customer);
 			return _context.SaveChanges() > 0;
@@ -63,6 +64,12 @@ namespace EduBook.DAO
 			return _context.Accounts
 				.Where(x => x.Status == true)
 					.FirstOrDefault(x => x.AccountId == id);
+		}
+
+		public Account GetByEmail(string email)
+		{
+			return _context.Accounts.FirstOrDefault(x => x.Email.Equals(email));
+				
 		}
 
 		public bool Update(Account customer)

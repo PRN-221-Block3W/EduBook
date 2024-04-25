@@ -19,5 +19,7 @@ namespace EduBook.Repository.ClassRepository
 		public List<Account> GetList() => AccountDAO.Instance.GetList();
 		public bool Remove(Account acc) => AccountDAO.Instance.Remove(acc);
 		public bool Update(Account acc) => AccountDAO.Instance.Update(acc);
+
+		public Account GetByEmail(string email) => AccountDAO.Instance.GetByEmail(email);
 	}
 }
