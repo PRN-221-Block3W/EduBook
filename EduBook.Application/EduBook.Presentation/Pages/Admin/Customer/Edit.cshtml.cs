@@ -56,7 +56,18 @@ namespace EduBook.Presentation.Pages.Admin.Customer
             {
                 return Page();
             }
+            var checkEmail = _accService.GetByEmail(Account.Email);
+            if (checkEmail != null)
+            {
+                ViewData["Message"] = "Email is already to used";
+                return Page();
+            }
 
+            if (Account.Dob > DateTime.Now)
+            {
+                ViewData["Message"] = "Dob is not bigger now";
+                return Page();
+            }
             _accService.Update(Account);
 
             return RedirectToPage("./Index");

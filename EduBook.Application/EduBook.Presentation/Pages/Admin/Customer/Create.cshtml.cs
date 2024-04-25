@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EduBook.BusinessObject;
 using EduBook.Service.IService;
+using EduBook.Service.ClassService;
 
 namespace EduBook.Presentation.Pages.Admin.Customer
 {
@@ -44,6 +45,18 @@ namespace EduBook.Presentation.Pages.Admin.Customer
         {
           if (!ModelState.IsValid)
             {
+                return Page();
+            }
+            var checkEmail = _accService.GetByEmail(Account.Email);
+            if (checkEmail != null)
+            {
+                ViewData["Message"] = "Email is already to used";
+                return Page();
+            }
+
+            if (Account.Dob > DateTime.Now)
+            {
+                ViewData["Message"] = "Dob is not bigger now";
                 return Page();
             }
 
