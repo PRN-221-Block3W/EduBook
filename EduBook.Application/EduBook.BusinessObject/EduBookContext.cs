@@ -33,18 +33,19 @@ namespace EduBook.BusinessObject
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(GetConnectionString());
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer(GetConnection());
             }
         }
 
-        private string GetConnectionString()
+        private string GetConnection()
         {
             IConfiguration config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true)
                 .Build();
-            var strConn = config["ConnectionStrings:ConnectionStrings"];
-            return strConn;
+            var conStr = config["ConnectionStrings:ConnectionStrings"];
+            return conStr;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -146,6 +147,11 @@ namespace EduBook.BusinessObject
                 entity.Property(e => e.ImageDepartment).HasMaxLength(100);
 
                 entity.Property(e => e.StartTime).HasColumnType("date");
+
+                entity.Property(e => e.Telephone)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("telephone");
             });
 
             modelBuilder.Entity<Equipment>(entity =>
@@ -187,8 +193,6 @@ namespace EduBook.BusinessObject
 
                 entity.Property(e => e.RoomId).ValueGeneratedNever();
 
-                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
-
                 entity.Property(e => e.Description).HasMaxLength(50);
 
                 entity.Property(e => e.RoomName).HasMaxLength(50);
@@ -196,6 +200,7 @@ namespace EduBook.BusinessObject
                 entity.HasOne(d => d.Department)
                     .WithMany(p => p.Rooms)
                     .HasForeignKey(d => d.DepartmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Room_Department");
             });
 
