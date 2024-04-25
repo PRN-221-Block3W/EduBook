@@ -37,14 +37,10 @@ namespace EduBook.Presentation.Pages.Admin.Rooms
         private IActionResult Authorized()
         {
             var id = HttpContext.Session.GetInt32("AccountId");
-            if (id == null)
-            {
-                return RedirectToPage("/LoginPage/Login");
-            }
             var role = _accService.GetById((int)id).RoleId;
-            if (role != 1)
+            if (id == null || role != 1)
             {
-                return RedirectToPage("/LoginPage/Login");
+                return RedirectToPage("/Error");
             }
 
             return null; // Return null if authorization succeeds
