@@ -1,0 +1,125 @@
+﻿@page
+@model EduBook.Presentation.Pages.Registers.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/css/login/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css/login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css//login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/css//login/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form-title" style="background-image: url(/css/login/images/bg-01.jpg);">
+                    <span class="login100-form-title-1">
+                        Register
+                    </span>
+                </div>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Account.UserName" class="control-label"></label>
+                        <input asp-for="Account.UserName" class="form-control" />
+                        <span asp-validation-for="Account.UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Account.Phone" class="control-label"></label>
+                        <input asp-for="Account.Phone" class="form-control" />
+                        <span asp-validation-for="Account.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Account.Address" class="control-label"></label>
+                        <input asp-for="Account.Address" class="form-control" />
+                        <span asp-validation-for="Account.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Account.Dob" class="control-label"></label>
+                        <input asp-for="Account.Dob" class="form-control" />
+                        <span asp-validation-for="Account.Dob" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Account.Email" class="control-label"></label>
+                        <input asp-for="Account.Email" class="form-control" />
+                        <span asp-validation-for="Account.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Account.Password" class="control-label"></label>
+                        <input asp-for="Account.Password" class="form-control" type="password"/>
+                        <span asp-validation-for="Account.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span asp-for="Confirm-Password" class="control-label">Confirm-Password</span>
+                        <input asp-for="CfPassword" class="form-control" type="password" />
+                        <span  class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+                @if (!string.IsNullOrEmpty(ViewBag.Message))
+                {
+                    <p class="alert alert-danger" role="alert">@ViewData["Message"]</p>
+                }
+                <div>
+                    <a asp-page="/LoginPage/Login">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="/css//login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/css//login/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/css//login/vendor/bootstrap/js/popper.js"></script>
+    <script src="/css//login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/css//login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/css//login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/css//login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="/css//login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="/css//login/js/main.js"></script>
+
+</body>
+</html>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
