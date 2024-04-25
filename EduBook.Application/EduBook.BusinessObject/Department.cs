@@ -15,7 +15,6 @@ namespace EduBook.BusinessObject
         public string Address { get; set; } = null!;
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public string ImageDepartment { get; set; } = null!;
         public bool Status { get; set; }
 
         public virtual ICollection<Room> Rooms { get; set; }
