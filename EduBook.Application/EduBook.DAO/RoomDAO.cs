@@ -50,9 +50,9 @@ namespace EduBook.DAO
 		public Room GetById(int id)
 		{
 			return _context.Rooms
-				.Include(r => r.Department)
-				.Where(x => x.Status == true)
-				.FirstOrDefault(x => x.RoomId == id);
+				.Include(x => x.Department)
+				//.Where(x => x.Status == true)
+					.FirstOrDefault(x => x.RoomId == id);
 		}
 
 		public bool Update(Room room)
