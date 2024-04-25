@@ -1,11 +1,14 @@
 ﻿@page
-@model EduBook.Presentation.Pages.Customer.SearchRoomModel;
+@model EduBook.Presentation.Pages.Customer.SearchRoomModel    ;
 
 @{
-    ViewData["Title"] = "SearchShop";
+    ViewData["Title"] = "SearchRoom";
 }
+
 <!DOCTYPE html>
 <html lang="en">
+<a href="d:\edubook\edubook.application\edubook.presentation\pages\customer\searchroom.cshtml">d:\edubook\edubook.application\edubook.presentation\pages\customer\searchroom.cshtml</a>
+<a href="d:\edubook\edubook.application\edubook.presentation\pages\customer\searchroom.cshtml.cs">d:\edubook\edubook.application\edubook.presentation\pages\customer\searchroom.cshtml.cs</a>
 
 <head>
     <meta charset="utf-8">
@@ -43,13 +46,11 @@
     </div>
     <!-- Spinner End -->
     <!-- Navbar start -->
-
     <div class="container-fluid fixed-top">
         <div class="container topbar bg-primary d-none d-lg-block">
             <div class="d-flex justify-content-between">
                 <div class="top-info ps-2">
-                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 li thuong kiet, 10 district</a></small>
-                    @*<small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>*@
+                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Li Thuong kiet, 10 district</a></small>
                 </div>
                 <div class="top-link pe-2">
                     @*                     <a asp-page="/Customer/BookingHistory" class="text-white"><small class="text-white mx-2">Booking History</small>/</a>
@@ -59,10 +60,6 @@
         </div>
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Edu Book</h1></a>
-                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars text-primary"></span>
-                </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
                     </div>
@@ -93,19 +90,18 @@
             </nav>
         </div>
     </div>
-
     <!-- Navbar End -->
     <!-- Modal Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content rounded-0">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search by room</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Search by Room</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex align-items-center">
                     <div class="input-group w-75 mx-auto d-flex">
-                        <form method="get" asp-page="./SearchRoom">
+                        <form method="get" asp-page="./SearchShop">
                             <input type="text" id="roomName" name="RoomName" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                             <button type="submit" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
                         </form>
@@ -127,14 +123,14 @@
     <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
-            <h1 class="mb-4">Edu Room</h1>
+            <h1 class="mb-4">Edu Book</h1>
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
                         <div class="col-xl-3">
                             <div class="input-group w-100 mx-auto d-flex">
                                 <form method="get">
-                                    <input type="text" id="roomName" name="RooName" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                                    <input type="text" id="roomName" name="RoomName" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                                     <button type="submit" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
@@ -160,36 +156,29 @@
                                         <h4>List Room</h4>
                                         @foreach (var item in Model.ListRoom)
                                         {
-                                    <ul class="list-unstyled fruite-categorie">
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                    <a asp-page="./SearchRoom" asp-route-RoomName="@item.RoomName"><i class="fas fa-paw me-2"></i>@Html.DisplayFor(modelItem => item.RoomName)</a>
+                                            <ul class="list-unstyled fruite-categorie">
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name">
+                                                        <a asp-page="./SearchRoom" asp-route-RoomName="@item.RoomName"><i class="fas fa-paw me-2"></i>@Html.DisplayFor(modelItem => item.RoomName)</a>
                                                         @* <span></span> *@
-                                            </div>
-                                        </li>
-                                    </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         }
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <div class="position-relative">
-                                        <img src="/img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
-                                        <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                            <h3 class="text-secondary fw-bold">Edu <br> Book <br> Platform</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-lg-9">
                             <div class="row g-4 justify-content-center">
-                                <div class="col-md-6 col-lg-6 col-xl-4">
                                     @if (Model.ListRoom != null && Model.ListRoom.Count > 0)
                                     {
                                         @foreach (var item in Model.ListRoom)
                                         {
-                                            <a asp-page="./RoomDetails" asp-route-id="@item.RoomId">
+                                           <div class="col-md-6 col-lg-6 col-xl-4">
+                                            <a asp-page="./ShopDetails" asp-route-id="@item.RoomId">
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
                                                         <img src="/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
@@ -200,8 +189,8 @@
                                                             <a asp-page="./ShopDetails" asp-route-id="@item.RoomId">@Html.DisplayFor(modelItem => item.RoomName)</a>
                                                         </h4>
                                                         <p>
-                                                            Length Room: @Html.DisplayFor(modelItem => item.LengthRoom)
-                                                            Width Room: @Html.DisplayFor(modelItem => item.WidthRoom)
+                                                            Lenght: @Html.DisplayFor(modelItem => item.LengthRoom)
+                                                            Width: @Html.DisplayFor(modelItem => item.WidthRoom)
                                                         </p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                                             <a asp-page="./ShopDetails" asp-route-id="@item.RoomId" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> View Room</a>
@@ -209,13 +198,14 @@
                                                     </div>
                                                 </div>
                                             </a>
+                                        </div>
+
                                         }
                                     }
                                     else
                                     {
-                                        <p>No shops found with the specified Cat Type.</p>
+                                        <p>No shops found with the specified Room.</p>
                                     }
-                                </div>
                                 <div class="col-12">
                                     <div class="pagination d-flex justify-content-center mt-5">
                                         <a href="#" class="rounded">&laquo;</a>
@@ -244,8 +234,8 @@
                 <div class="row g-4">
                     <div class="col-lg-3">
                         <a href="#">
-                            <h1 class="text-primary mb-0">Edu Book</h1>
-                            <p class="text-secondary mb-0">where you can find Edu Book</p>
+                            <h1 class="text-primary mb-0">Edu Booking</h1>
+                            <p class="text-secondary mb-0">where you can find Edu Booking</p>
                         </a>
                     </div>
                     <div class="col-lg-6">
@@ -314,7 +304,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Edu Book</a>, All right reserved.</span>
+                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>EduBook</a>, All right reserved.</span>
                 </div>
                 <div class="col-md-6 my-auto text-center text-md-end text-white">
                     <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->

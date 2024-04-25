@@ -168,14 +168,14 @@
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Edu Book</div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h4>
-                                                        <a asp-page="./ShopDetails" asp-route-id="@item.RoomId">@Html.DisplayFor(modelItem => item.RoomName)</a>
+                                                        <a asp-page="./RoomDetails" asp-route-id="@item.RoomId">@Html.DisplayFor(modelItem => item.RoomName)</a>
                                                     </h4>
                                                     <p>
-                                                        Start Time: @Html.DisplayFor(modelItem => item.LengthRoom)
-                                                        End Time: @Html.DisplayFor(modelItem => item.WidthRoom)
+                                                        Lenght Room: @Html.DisplayFor(modelItem => item.LengthRoom)
+                                                        Width Room: @Html.DisplayFor(modelItem => item.WidthRoom)
                                                     </p>
                                                     <div class="d-flex justify-content-between align-content-center  flex-lg-wrap">
-                                                            <a asp-page="./ShopDetails" asp-route-id="@item.RoomId" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> View Room</a>
+                                                            <a asp-page="./RoomDetails" asp-route-id="@item.RoomId" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> View Room</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,7 +251,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Shop Info</h4>
+                        <h4 class="text-light mb-3">Edu Book Info</h4>
                         <a class="btn-link" href="">About Us</a>
                         <a class="btn-link" href="">Contact Us</a>
                         <a class="btn-link" href="">Privacy Policy</a>
