@@ -56,7 +56,18 @@ namespace EduBook.Presentation.Pages.Admin.Customer
             {
                 return Page();
             }
+            var checkEmail = _accService.GetByEmail(Account.Email);
+            if (checkEmail != null)
+            {
+                ViewData["Message"] = "Email is already to used";
+                return Page();
+            }
 
+            if (Account.Dob > DateTime.Now)
+            {
+                ViewData["Message"] = "Dob is not bigger now";
+                return Page();
+            }
             _accService.Update(Account);
 
             return RedirectToPage("./Index");
@@ -65,14 +76,10 @@ namespace EduBook.Presentation.Pages.Admin.Customer
         private IActionResult Authorized()
         {
             var id = HttpContext.Session.GetInt32("AccountId");
-            if (id == null)
-            {
-                return RedirectToPage("/LoginPage/Login");
-            }
             var role = _accService.GetById((int)id).RoleId;
-            if (role != 1)
+            if (id == null || role != 1)
             {
-                return RedirectToPage("/Customer/CustomerHomePage");
+                return RedirectToPage("/Error");
             }
 
             return null; // Return null if authorization succeeds

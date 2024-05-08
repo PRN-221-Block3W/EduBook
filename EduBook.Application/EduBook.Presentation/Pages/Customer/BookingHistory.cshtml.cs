@@ -29,7 +29,7 @@ namespace EduBook.Presentation.Pages.Customer
             int? accountId = HttpContext.Session.GetInt32("AccountId");
             if (accountId == null)
             {
-                return RedirectToPage("/LoginPage/Login");
+                return RedirectToPage("/Error");
             }
             customer = accountRepository.GetById((int)accountId);
             Booking = bookingRepository.GetBookingsByAccount((int) accountId);

@@ -2,62 +2,69 @@
 @model EduBook.Presentation.Pages.Admin.Departments.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+	Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>Department Manager</h1>
 
 <a asp-page="Create">
-    <span class="material-icons">add</span>
+	<span class="material-icons">add</span>
 </a>
-<div class="recent_order"> 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Department[0].DepartmentName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Department[0].Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Department[0].StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Department[0].EndTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Department[0].Status)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Department)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DepartmentName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.DepartmentId">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.DepartmentId">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.DepartmentId">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="recent_order">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Department[0].DepartmentName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Department[0].Address)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Department[0].StartTime)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Department[0].EndTime)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Department[0].Status)
+				</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.Department)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.DepartmentName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Address)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.StartTime)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.EndTime)
+					</td>
+					@{
+						if (item.Status)
+						{
+							<td>Active</td>
+						}
+						else
+						{
+							<td>Deactive</td>
+						}
+					}
+					<td>
+						<a asp-page="./Edit" asp-route-id="@item.DepartmentId">Edit</a>
+						<a asp-page="./Details" asp-route-id="@item.DepartmentId">Details</a>
+						<a asp-page="./Delete" asp-route-id="@item.DepartmentId">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 </div>

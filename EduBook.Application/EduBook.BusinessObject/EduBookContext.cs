@@ -33,19 +33,20 @@ namespace EduBook.BusinessObject
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				optionsBuilder.UseSqlServer(GetConnectionString());
+				optionsBuilder.UseSqlServer(GetConnection());
 			}
 		}
 
-		private string GetConnectionString()
-		{
-			IConfiguration config = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", true, true)
-				.Build();
-			var strConn = config["ConnectionStrings:DefaultConnectionStringDB"];
-			return strConn;
-		}
+        private string GetConnection()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+
+            var conStr = config["ConnectionStrings:ConnectionStrings"];
+            return conStr;
+        }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -148,11 +149,6 @@ namespace EduBook.BusinessObject
                 entity.Property(e => e.EndTime).HasColumnType("date");
 
                 entity.Property(e => e.StartTime).HasColumnType("date");
-
-                entity.Property(e => e.Telephone)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("telephone");
             });
 
             modelBuilder.Entity<Equipment>(entity =>

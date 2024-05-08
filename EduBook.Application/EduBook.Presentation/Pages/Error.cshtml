@@ -4,23 +4,97 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
+<style>
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+html {
+    height: 100%;
+}
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #342643; 
+    height: 100%;
+    padding: 10px;
 }
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to the <strong>Development</strong> environment displays detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+a {
+  color: #EE4B5E !important;
+  text-decoration:none;
+}
+a:hover {
+  color: #FFFFFF !important;
+  text-decoration:none;
+}
+
+.text-wrapper {
+    height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.title {
+    font-size: 5em;
+    font-weight: 700;
+    color: #EE4B5E;
+}
+
+.subtitle {
+    font-size: 40px;
+    font-weight: 700;
+    color: #1FA9D6;
+}
+.isi {
+    font-size: 18px;
+    text-align: center;
+    margin:30px;
+    padding:20px;
+    color: white;
+}
+.buttons {
+    margin: 30px;
+        font-weight: 700;
+        border: 2px solid #EE4B5E;
+        text-decoration: none;
+        padding: 15px;
+        text-transform: uppercase;
+        color: #EE4B5E;
+        border-radius: 26px;
+        transition: all 0.2s ease-in-out;
+        display: inline-block;
+        
+        .buttons:hover {
+            background-color: #EE4B5E;
+            color: white;
+            transition: all 0.2s ease-in-out;
+        }
+  }
+}
+</style>
+
+<div class="text-wrapper">
+    <div class="title" data-content="404">
+        403 - ACCESS DENIED
+    </div>
+
+    <div class="subtitle">
+        Oops, You don't have permission to access this page.
+    </div>
+
+    <div class="buttons">
+        @{
+            var id = HttpContext.Session.GetInt32("role");
+            if(id == null)
+            {
+                <a class="button" asp-page="/LoginPage/Login">Login</a>
+            }else if(id == 1){
+                <a class="button" asp-page="/Admin/Dashboard">Back to home</a>
+            }else if(id == 2)
+            {
+                <a class="button" asp-page="/Customer/CustomerHomePage">Back to home</a>
+            }
+        }
+    </div>
+</div>

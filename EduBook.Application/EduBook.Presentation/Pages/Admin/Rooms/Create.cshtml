@@ -2,148 +2,120 @@
 @model EduBook.Presentation.Pages.Admin.Rooms.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+	ViewData["Title"] = "Create";
+	Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
 }
-
 <style>
-    /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+	.recent_order {
+		margin: 20px auto;
+		padding: 20px;
+		background-color: #f8f9fa;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
 
-.container {
-    display: flex;
-    height: 100vh;
-}
+		.recent_order h1 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: #333;
+		}
 
-/* Sidebar Styles */
-aside {
-    background-color: #212529;
-    color: #fff;
-    width: 250px;
-    padding: 20px;
-    box-sizing: border-box;
-}
+		.recent_order form {
+			max-width: 400px;
+			margin: 0 auto;
+		}
 
-.logo {
-    margin-bottom: 20px;
-}
+		.recent_order .form-group {
+			margin-bottom: 20px;
+		}
 
-.logo h2 {
-    margin: 0;
-}
+		.recent_order label {
+			font-weight: bold;
+		}
 
-.sidebar a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
+		.recent_order input[type="text"],
+		.recent_order input[type="time"] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
 
-.sidebar a:hover {
-    color: #17a2b8;
-}
+		.recent_order input[type="submit"] {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
 
-/* Main Content Styles */
-main {
-    padding: 20px;
-    flex: 1;
-    overflow-y: auto;
-}
+			.recent_order input[type="submit"]:hover {
+				background-color: #0056b3;
+			}
 
-h1, h4 {
-    color: #343a40;
-}
+		.recent_order .text-danger {
+			color: #dc3545;
+			font-size: 14px;
+		}
 
-.row {
-    margin-right: -15px;
-    margin-left: -15px;
-}
+		.recent_order a {
+			color: #007bff;
+			text-decoration: none;
+		}
 
-.form-label {
-    font-weight: bold;
-}
-
-/* Right Sidebar Styles */
-.right {
-    background-color: #f8f9fa;
-    width: 250px;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.theme-toggler {
-    margin-top: 20px;
-}
-
-/* Profile Styles */
-.profile {
-    display: flex;
-    align-items: center;
-}
-
-.profile-photo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: 10px;
-}
-
+			.recent_order a:hover {
+				text-decoration: underline;
+			}
 </style>
+<div class="recent_order">
+	<h1>Create</h1>
 
-<h1>Create</h1>
+	<h4>Room</h4>
+	<hr />
 
-<h4>Room</h4>
-<hr />
+	<div class="row">
+		<div class="col-md-6">
+			<form method="post">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="mb-3">
+					<label asp-for="Room.RoomName" class="form-label">Room Name</label>
+					<input asp-for="Room.RoomName" class="form-control" />
+					<span asp-validation-for="Room.RoomName" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Room.Description" class="form-label">Description</label>
+					<input asp-for="Room.Description" class="form-control" />
+					<span asp-validation-for="Room.Description" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Room.LengthRoom" class="form-label">Length</label>
+					<input asp-for="Room.LengthRoom" class="form-control" />
+					<span asp-validation-for="Room.LengthRoom" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Room.WidthRoom" class="form-label">Width</label>
+					<input asp-for="Room.WidthRoom" class="form-control" />
+					<span asp-validation-for="Room.WidthRoom" class="text-danger"></span>
+				</div>
+				<div class="form-check mb-3">
+					<input class="form-check-input" asp-for="Room.Status" />
+					<label class="form-check-label" for="Room_Status">@Html.DisplayNameFor(model => model.Room.Status)</label>
+				</div>
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <label asp-for="Room.RoomId" class="form-label">Room ID</label>
-                <input asp-for="Room.RoomId" class="form-control" />
-                <span asp-validation-for="Room.RoomId" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Room.RoomName" class="form-label">Room Name</label>
-                <input asp-for="Room.RoomName" class="form-control" />
-                <span asp-validation-for="Room.RoomName" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Room.Description" class="form-label">Description</label>
-                <input asp-for="Room.Description" class="form-control" />
-                <span asp-validation-for="Room.Description" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Room.LengthRoom" class="form-label">Length</label>
-                <input asp-for="Room.LengthRoom" class="form-control" />
-                <span asp-validation-for="Room.LengthRoom" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Room.WidthRoom" class="form-label">Width</label>
-                <input asp-for="Room.WidthRoom" class="form-control" />
-                <span asp-validation-for="Room.WidthRoom" class="text-danger"></span>
-            </div>
-            <div class="form-check mb-3">
-                <input class="form-check-input" asp-for="Room.Status" />
-                <label class="form-check-label" for="Room_Status">@Html.DisplayNameFor(model => model.Room.Status)</label>
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
+	<div>
+		<a asp-page="Index">Back to List</a>
+	</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

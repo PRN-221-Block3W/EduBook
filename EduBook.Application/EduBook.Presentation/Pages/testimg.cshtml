@@ -1,0 +1,33 @@
+﻿@page
+@model EduBook.Presentation.Pages.testimgModel
+@{
+}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="ImageFile" accept="image/*">
+    <label for="fileInput" id="fileInputLabel">
+        <img id="previewImage" src="#" alt="Preview">
+        <span>Chọn ảnh</span>
+    </label>
+    <button type="submit">Upload ảnh</button>
+</form>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function () {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('previewImage').setAttribute('src', e.target.result);
+                document.getElementById('fileInputLabel').classList.add('selected');
+                document.getElementById('fileInputLabel').getElementsByTagName('span')[0].innerText = 'Ảnh đã chọn';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Reset UI if no file selected
+            document.getElementById('previewImage').setAttribute('src', '#');
+            document.getElementById('fileInputLabel').classList.remove('selected');
+            document.getElementById('fileInputLabel').getElementsByTagName('span')[0].innerText = 'Chọn ảnh';
+        }
+    });
+</script>

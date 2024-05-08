@@ -17,8 +17,11 @@ namespace EduBook.Repository.ClassRepository
 
 		public List<RoomEquipment> GetList() => RoomEquipmentDAO.Instance.GetList();
 
-		public bool Remove(RoomEquipment roomEq) => RoomEquipmentDAO.Instance.Remove(roomEq);
+        public IList<RoomEquipment> GetListRoomEquip(int roomId) => RoomEquipmentDAO.Instance.GetListRoomEquip(roomId);
+
+        public bool Remove(RoomEquipment roomEq) => RoomEquipmentDAO.Instance.Remove(roomEq);
 
 		public bool Update(RoomEquipment roomEq) => RoomEquipmentDAO.Instance.Equals(roomEq);
+
 	}
 }

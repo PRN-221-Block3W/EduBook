@@ -24,7 +24,9 @@ namespace EduBook.Service.ClassService
 
 		public List<RoomEquipment> GetList() => _repo.GetList();
 
-		public bool Remove(RoomEquipment roomEq) => _repo.Remove(roomEq);
+        public IList<RoomEquipment> GetListRoomEquip(int roomId) => _repo.GetListRoomEquip(roomId);
+
+        public bool Remove(RoomEquipment roomEq) => _repo.Remove(roomEq);
 
 		public bool Update(RoomEquipment roomEq) => _repo.Equals(roomEq);
 	}

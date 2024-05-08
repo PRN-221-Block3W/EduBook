@@ -2,72 +2,133 @@
 @model EduBook.Presentation.Pages.Admin.Customer.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+	ViewData["Title"] = "Create";
 }
+<style>
+	.recent_order {
+		margin: 20px auto;
+		padding: 20px;
+		background-color: #f8f9fa;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
 
-<h1>Create</h1>
+		.recent_order h1 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: #333;
+		}
 
-<h4>Account</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Account.AccountId" class="control-label"></label>
-                <input asp-for="Account.AccountId" class="form-control" />
-                <span asp-validation-for="Account.AccountId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.RoleId" class="control-label"></label>
-                <select asp-for="Account.RoleId" class ="form-control" asp-items="ViewBag.RoleId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.UserName" class="control-label"></label>
-                <input asp-for="Account.UserName" class="form-control" />
-                <span asp-validation-for="Account.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.Phone" class="control-label"></label>
-                <input asp-for="Account.Phone" class="form-control" />
-                <span asp-validation-for="Account.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.Address" class="control-label"></label>
-                <input asp-for="Account.Address" class="form-control" />
-                <span asp-validation-for="Account.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.Dob" class="control-label"></label>
-                <input asp-for="Account.Dob" class="form-control" />
-                <span asp-validation-for="Account.Dob" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.Email" class="control-label"></label>
-                <input asp-for="Account.Email" class="form-control" />
-                <span asp-validation-for="Account.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Account.Password" class="control-label"></label>
-                <input asp-for="Account.Password" class="form-control" />
-                <span asp-validation-for="Account.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Account.Status" /> @Html.DisplayNameFor(model => model.Account.Status)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+		.recent_order form {
+			max-width: 400px;
+			margin: 0 auto;
+		}
 
-<div>
-    <a asp-page="Index">Back to List</a>
+		.recent_order .form-group {
+			margin-bottom: 20px;
+		}
+
+		.recent_order label {
+			font-weight: bold;
+		}
+
+		.recent_order input[type="text"],
+		.recent_order input[type="time"] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		.recent_order input[type="submit"] {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+			.recent_order input[type="submit"]:hover {
+				background-color: #0056b3;
+			}
+
+		.recent_order .text-danger {
+			color: #dc3545;
+			font-size: 14px;
+		}
+
+		.recent_order a {
+			color: #007bff;
+			text-decoration: none;
+		}
+
+			.recent_order a:hover {
+				text-decoration: underline;
+			}
+</style>
+<div class="recent_order">
+	<h1>Create</h1>
+
+	<h4>Account</h4>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<form method="post">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Account.RoleId" class="control-label"></label>
+					<select asp-for="Account.RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+				</div>
+				<div class="form-group">
+					<label asp-for="Account.UserName" class="control-label"></label>
+					<input asp-for="Account.UserName" class="form-control" />
+					<span asp-validation-for="Account.UserName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Account.Phone" class="control-label"></label>
+					<input asp-for="Account.Phone" class="form-control" />
+					<span asp-validation-for="Account.Phone" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Account.Address" class="control-label"></label>
+					<input asp-for="Account.Address" class="form-control" />
+					<span asp-validation-for="Account.Address" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Account.Dob" class="control-label"></label>
+					<input asp-for="Account.Dob" class="form-control" />
+					<span asp-validation-for="Account.Dob" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Account.Email" class="control-label"></label>
+					<input asp-for="Account.Email" class="form-control" />
+					<span asp-validation-for="Account.Email" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Account.Password" class="control-label"></label>
+					<input asp-for="Account.Password" class="form-control" />
+					<span asp-validation-for="Account.Password" class="text-danger"></span>
+				</div>
+				<div class="form-group form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" asp-for="Account.Status" /> @Html.DisplayNameFor(model => model.Account.Status)
+					</label>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div>
+		<a asp-page="Index">Back to List</a>
+	</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }
